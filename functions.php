@@ -72,27 +72,10 @@ if (iro_opt('php_notice_filter') != 'inner') {
 
 //Update-Checker
 
-require 'update-checker/update-checker.php';
-use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
-
-function UpdateCheck($url, $flag = 'Sakurairo')
-{
-    return PucFactory::buildUpdateChecker(
-        $url,
-        __FILE__,
-        $flag
-    );
-}
-switch (iro_opt('iro_update_source')) {
-    case 'github':
-        $iroThemeUpdateChecker = UpdateCheck('https://github.com/mirai-mamori/Sakurairo', 'Sakurairo');
-        break;
-    case 'upyun':
-        $iroThemeUpdateChecker = UpdateCheck('https://api.fuukei.org/update/jsdelivr.json');
-        break;
-    case 'official_building':
-        $iroThemeUpdateChecker = UpdateCheck('https://api.fuukei.org/update/' . iro_opt('iro_update_channel') . '/check.json');
-}
+/*
+ * YBH: fork 版禁用上游更新检查（api.fuukei.org / mirai-mamori），
+ * 避免官方更新覆盖魔改内容；后续如需恢复，随上游同步后手动开启。
+ */
 
 add_action('init', 'set_user_locale');
 function set_user_locale() {
@@ -4543,3 +4526,11 @@ function iro_action_operator()
 }
 iro_action_operator();
 
+
+/*
+ * ============================================================
+ * SakurairoYBH · YBH 增量层（fork 魔改入口）
+ * 目录名校验解除 / 默认字体 / YBH 样式层 / 资源提示 / 友链批量导入
+ * ============================================================
+ */
+require get_template_directory() . '/inc/ybh/bootstrap.php';

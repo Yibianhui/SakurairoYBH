@@ -1,0 +1,545 @@
+/* ============================================================
+   SakurairoYBH · YBH 增量层
+   字体系统 / 标题签名可读性 / 展台密度 / 默认样式烘焙
+   由 inc/ybh/bootstrap.php 入队，加载于主题主样式之后
+   ============================================================ */
+
+/* ---------- 字体：Klee One（本地化） ---------- */
+@font-face {
+  font-family: 'Klee One';
+  src: url('https://download.yibianhui.cn/fonts/klee-one/KleeOne-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Klee One';
+  src: url('https://download.yibianhui.cn/fonts/klee-one/KleeOne-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- 字体：Boxed ---------- */
+@font-face {
+  font-family: 'Boxed';
+  src: url('https://download.yibianhui.cn/fonts/Boxed-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- 字体：更纱黑体 Sarasa UI（5 地区 × 5 字重 × 正/斜） ----------
+   文件名规则：Regular 斜体 = -Italic.woff2，其余字重斜体 = -{字重}Italic.woff2 */
+@font-face {
+  font-family: 'Sarasa UI SC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiSC-ExtraLight.woff2') format('woff2');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI SC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiSC-ExtraLightItalic.woff2') format('woff2');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI SC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiSC-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI SC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiSC-LightItalic.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI SC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiSC-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI SC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiSC-RegularItalic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI SC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiSC-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI SC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiSC-SemiBoldItalic.woff2') format('woff2');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI SC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiSC-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI SC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiSC-BoldItalic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI TC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiTC-ExtraLight.woff2') format('woff2');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI TC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiTC-ExtraLightItalic.woff2') format('woff2');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI TC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiTC-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI TC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiTC-LightItalic.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI TC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiTC-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI TC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiTC-RegularItalic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI TC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiTC-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI TC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiTC-SemiBoldItalic.woff2') format('woff2');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI TC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiTC-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI TC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiTC-BoldItalic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI J';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiJ-ExtraLight.woff2') format('woff2');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI J';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiJ-ExtraLightItalic.woff2') format('woff2');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI J';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiJ-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI J';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiJ-LightItalic.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI J';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiJ-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI J';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiJ-RegularItalic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI J';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiJ-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI J';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiJ-SemiBoldItalic.woff2') format('woff2');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI J';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiJ-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI J';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiJ-BoldItalic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI K';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiK-ExtraLight.woff2') format('woff2');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI K';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiK-ExtraLightItalic.woff2') format('woff2');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI K';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiK-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI K';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiK-LightItalic.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI K';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiK-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI K';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiK-RegularItalic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI K';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiK-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI K';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiK-SemiBoldItalic.woff2') format('woff2');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI K';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiK-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI K';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiK-BoldItalic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI HC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiHC-ExtraLight.woff2') format('woff2');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI HC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiHC-ExtraLightItalic.woff2') format('woff2');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI HC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiHC-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI HC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiHC-LightItalic.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI HC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiHC-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI HC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiHC-RegularItalic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI HC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiHC-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI HC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiHC-SemiBoldItalic.woff2') format('woff2');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI HC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiHC-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI HC';
+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiHC-BoldItalic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ---------- 字体：天珩字库 TH-Tshyn（分片 fallback，unicode-range 按实际 cmap 生成） ---------- */
+@font-face {
+  font-family: 'TH-Tshyn';
+  src: url('https://download.yibianhui.cn/fonts/tianheng/TH-Tshyn-P0.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-0E5B,U+0E81-0EDF,U+0F00-0FDA,U+1000-D7FB,U+E000-E1EC,U+E295,U+E37E,U+E400-E4DA,U+E500-E6CE,U+E815-E864,U+ED2B-ED43,U+ED73-ED8C,U+EDC9-EE0B,U+EE2F-EE68,U+EE8C-EE9A,U+F000-F414,U+F4EE-F4FF,U+F900-FAD9,U+FB00-FDCF,U+FDF0-FFFD,U+16FF0-16FF1,U+E0001-E007F,U+E0100-E01EF;
+}
+@font-face {
+  font-family: 'TH-Tshyn';
+  src: url('https://download.yibianhui.cn/fonts/tianheng/TH-Tshyn-P1.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-007E,U+3099-309A,U+10000-1005D,U+10080-101A0,U+101D0-101FD,U+10280-103D5,U+10400-107BF,U+10800-108AF,U+108E0-10959,U+10980-10A9F,U+10AC0-10BAF,U+10C00-10C48,U+10C80-10D8F,U+10E60-10ED8,U+10EFA-10F89,U+10FB0-11241,U+11280-114D9,U+11580-115DD,U+11600-11746,U+11800-1183B,U+118A0-11959,U+119A0-11B09,U+11B60-11B67,U+11BC0-11CB6,U+11D00-11DE9,U+11EE0-11F5A,U+11FB0-12399,U+12400-12543,U+12F90-14646,U+16100-16139,U+16800-16B8F,U+16D40-16D79,U+16E40-16ED3,U+16F00-16F9F,U+16FE0-18CDA,U+18CFF-18D1E,U+18D80-18DF2,U+1AFF0-1B2FB,U+1BC00-1BCA3,U+1CC00-1CFC3,U+1D000-1D245,U+1D2C0-1D378,U+1D400-1DAAF,U+1DF00-1DF8A,U+1DFC5-1E06D,U+1E08F,U+1E100-1E14F,U+1E290-1E2FF,U+1E4D0-1E4F9,U+1E5D0-1E5FF,U+1E6C0-1E6FF,U+1E7E0-1E8D6,U+1E900-1E95F,U+1EC71-1ECB4,U+1ED01-1ED3D,U+1EE00-1EEBB,U+1EEF0-1EEF1,U+1F000-1F1AD,U+1F1E6-1F265,U+1F300-1F8D8,U+1F900-1FBFA,U+30000-33479;
+}
+@font-face {
+  font-family: 'TH-Tshyn';
+  src: url('https://download.yibianhui.cn/fonts/tianheng/TH-Tshyn-P2.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-007E,U+16FF0-16FF1,U+20000-2A6DF,U+2A700-2EE5D,U+2F800-2FA1D;
+}
+@font-face {
+  font-family: 'TH-Tshyn';
+  src: url('https://download.yibianhui.cn/fonts/tianheng/TH-Tshyn-P16.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-007E,U+100000-101AFF,U+102000-10437B,U+105000-10C7B7;
+}
+
+/* ---------- 字体：霞鹜文楷（子集优先，全量兜底；同一字体声明 italic 面，中文斜体不再合成歪斜） ---------- */
+@font-face {
+  font-family: 'LXGW WenKai';
+  src: url('https://download.yibianhui.cn/fonts/lxgw/LXGWWenKai-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'LXGW WenKai';
+  src: url('https://download.yibianhui.cn/fonts/lxgw/LXGWWenKai-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'LXGW WenKai';
+  src: url('https://download.yibianhui.cn/fonts/lxgw/LXGWWenKai-Regular-subset.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0020-00FF,U+2000-206F,U+3000-303F,U+4E00-9FA5,U+FF00-FFEF;
+}
+@font-face {
+  font-family: 'LXGW WenKai';
+  src: url('https://download.yibianhui.cn/fonts/lxgw/LXGWWenKai-Regular-subset.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0020-00FF,U+2000-206F,U+3000-303F,U+4E00-9FA5,U+FF00-FFEF;
+}
+
+/* ---------- 默认字体：按页面语言自动匹配更纱地区版本，天珩真·兜底 ---------- */
+:lang(zh),:lang(zh-CN),:lang(zh-Hans) {
+  font-family: 'Sarasa UI SC', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
+}
+:lang(zh-TW),:lang(zh-Hant) {
+  font-family: 'Sarasa UI TC', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
+}
+:lang(zh-HK),:lang(zh-MO) {
+  font-family: 'Sarasa UI HC', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
+}
+:lang(ja) {
+  font-family: 'Sarasa UI J', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
+}
+:lang(ko) {
+  font-family: 'Sarasa UI K', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
+}
+
+/* ---------- 中文斜体 = 霞鹜文楷（楷体作为斜体“声音”；代码块内不劫持） ---------- */
+i, em, cite, var, dfn {
+  font-family: 'LXGW WenKai', 'Sarasa UI SC', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
+}
+code i, code em, pre i, pre em, kbd i, kbd em, samp i, samp em {
+  font-family: inherit;
+}
+
+/* ---------- 默认样式烘焙（与站点「额外 CSS」一致，作为主题默认值；额外 CSS 仍可随时覆盖） ---------- */
+.entry-content p {
+  margin: 0;
+  text-indent: 2em;
+  line-height: 2;
+}
+:root {
+  text-autospace: normal;
+  text-spacing-trim: trim-start;
+}
+
+/* 签名栏字体：弃用需走 Google 的 Noto Serif SC，改本地 Klee One */
+.header-info p {
+  font-family: 'Klee One', 'Sarasa UI SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+/* ---------- 标题与签名：多背景色可读性 ---------- */
+/* 首屏大标题：深色柔光保护层（亮背景压暗、暗背景提对比），不改变主题配色 */
+.center-text {
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.55), 0 0 30px rgba(0, 0, 0, 0.28);
+}
+.center-text.glitch::before,
+.center-text.glitch::after {
+  text-shadow: none;
+}
+/* 导航栏站名 */
+.site-title {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+/* 首屏头像描边 */
+.focusinfo .header-tou img {
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+}
+/* 签名栏：无论封面明暗都保底可读（透明度下限 + 双模式底色） */
+.header-info {
+  background: rgba(255, 255, 255, max(var(--homepage_widget_transparency, 1), 0.45));
+  border-color: rgba(255, 255, 255, max(var(--homepage_widget_transparency, 1), 0.45));
+}
+.header-info p {
+  color: var(--theme-skin, #505050);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+body.dark .header-info {
+  background: rgba(28, 28, 30, max(var(--homepage_widget_transparency, 1), 0.5));
+  border-color: rgba(255, 255, 255, 0.08);
+}
+body.dark .header-info p {
+  color: #ebebeb;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- 展台：单行展示数量 3 → 4（响应式逐级回落） ---------- */
+.bento-medium {
+  grid-column: span 3;
+}
+@media (max-width: 1280px) {
+  .bento-medium {
+    grid-column: span 4;
+  }
+}
+@media (max-width: 1080px) {
+  .bento-medium {
+    grid-column: span 6;
+  }
+}
+@media (max-width: 768px) {
+  .bento-medium {
+    grid-column: span 12;
+  }
+}

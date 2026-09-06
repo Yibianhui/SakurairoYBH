@@ -1,12 +1,12 @@
 @charset "utf-8";
 
 /*
-Theme Name: Sakurairo
-Theme URI: https://github.com/mirai-mamori/Sakurairo
-Author: Created by Fuukei
-Author URI: https://docs.fuukei.org/
-Description: A WordPress theme that is built with AI-assisted reading features, colorful, user-friendly, well-rounded, and rich in functionalities. (Based on Theme Sakura)
-Version: 3.0.11
+Theme Name: SakurairoYBH
+Theme URI: https://github.com/Yibianhui/SakurairoYBH
+Author: Yibianhui (based on Sakurairo by Fuukei)
+Author URI: https://www.yibianhui.cn/
+Description: SakurairoYBH —— 基于 Fuukei Sakurairo 的 YBH 魔改版：更纱黑体字体系统、标题签名可读性、展台密度、友链批量导入、性能优化与默认样式烘焙。A WordPress theme that is built with AI-assisted reading features, colorful, user-friendly, well-rounded, and rich in functionalities. (Based on Theme Sakura)
+Version: 3.0.11-ybh1
 Tested up to: 6.8
 Requires at least: 6.0
 Requires PHP: 8.0
@@ -18,9 +18,22 @@ Tags: AI-assisted reading, Colorful, User-friendly, Well-rounded, Feature-rich
 
 /* Base HTML Element Styles */
 
+/*
+ * YBH 性能修正：全局 `transition: all` 会让所有元素的所有属性（含触发重排的
+ * width/height/top/margin）都参与过渡，是动画掉帧的主要来源。
+ * 收敛为仅过渡视觉合成属性；i 元素的豁免规则保持不变。
+ */
 * {
-  transition: all 0.4s cubic-bezier(0.07, 0.53, 0.65, 0.95);;
-  -webkit-transition: all 0.4s cubic-bezier(0.07, 0.53, 0.65, 0.95);;
+  transition:
+    color 0.4s cubic-bezier(0.07, 0.53, 0.65, 0.95),
+    background-color 0.4s cubic-bezier(0.07, 0.53, 0.65, 0.95),
+    border-color 0.4s cubic-bezier(0.07, 0.53, 0.65, 0.95),
+    fill 0.4s cubic-bezier(0.07, 0.53, 0.65, 0.95),
+    stroke 0.4s cubic-bezier(0.07, 0.53, 0.65, 0.95),
+    opacity 0.4s cubic-bezier(0.07, 0.53, 0.65, 0.95),
+    transform 0.4s cubic-bezier(0.07, 0.53, 0.65, 0.95),
+    box-shadow 0.4s cubic-bezier(0.07, 0.53, 0.65, 0.95),
+    filter 0.4s cubic-bezier(0.07, 0.53, 0.65, 0.95);
 }
 
 i,i:hover{

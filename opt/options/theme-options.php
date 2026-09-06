@@ -791,7 +791,7 @@ $prefix = 'iro_options';
         'type' => 'text',
         'title' => __('Global Default Font/Widgets Panel Font Switching A','sakurairo_csf'),
         'desc' => __('Fill in the font name. For example: Noto Serif SC','sakurairo_csf'),
-        'default' => 'Noto Serif SC'
+        'default' => '\'Sarasa UI SC\',\'PingFang SC\',\'Microsoft YaHei\',\'TH-Tshyn\',sans-serif'
       ),
 
       array(
@@ -800,7 +800,7 @@ $prefix = 'iro_options';
         'title' => __('Widgets Panel Font Switching B','sakurairo_csf'),
         'dependency' => array( 'widget_font', '==', 'true', '', 'true' ),
         'desc' => __('Fill in the font name. For example: Noto Serif SC','sakurairo_csf'),
-        'default' => 'Noto Sans SC'
+        'default' => '\'Sarasa UI SC\',\'PingFang SC\',\'Microsoft YaHei\',\'TH-Tshyn\',sans-serif'
       ),
 
     )
