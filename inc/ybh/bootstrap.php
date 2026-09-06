@@ -28,8 +28,10 @@ remove_action('admin_init', 'theme_folder_check_on_admin_init');
 
 /**
  * 2) 默认字体：更纱黑体。
- *    仅当主题选项仍为旧默认（Noto Serif SC）或为空时替换；
- *    用户在主题设置里显式填写的字体一律尊重（保留原格式选项）。
+ *    站点数据库中多处字体选项仍存有旧默认 Noto Serif SC / Noto Sans SC
+ *    （Google 字体，国内访客实际回退到系统字体），统一替换为更纱黑体全栈；
+ *    用户显式设置的其他字体一律尊重（保留原格式选项）。
+ *    覆盖键：全局默认/正文/导航菜单/页脚/换肤菜单/栏目标题/站名。
  */
 add_filter('option_iro_options', 'ybh_font_option_defaults');
 function ybh_font_option_defaults($value)
@@ -38,11 +40,25 @@ function ybh_font_option_defaults($value)
         return $value;
     }
     $sarasa = "'Sarasa UI SC','PingFang SC','Microsoft YaHei','TH-Tshyn',sans-serif";
-    $legacy = array('', 'Noto Serif SC');
-    foreach (array('global_default_font', 'global_font_2') as $key) {
+    $legacy = array('', 'Noto Serif SC', 'Noto Sans SC', 'Sarasa UI SC');
+    $keys = array(
+        'global_default_font',
+        'global_font_2',
+        'nav_menu_font',
+        'footer_text_font',
+        'style_menu_font',
+        'area_title_font',
+    );
+    foreach ($keys as $key) {
         $current = isset($value[$key]) ? trim((string) $value[$key]) : '';
-        if ($current === '' || in_array($current, $legacy, true)) {
+        if (in_array($current, $legacy, true)) {
             $value[$key] = $sarasa;
+        }
+    }
+    if (isset($value['nav_text_logo']) && is_array($value['nav_text_logo'])) {
+        $current = isset($value['nav_text_logo']['font_name']) ? trim((string) $value['nav_text_logo']['font_name']) : '';
+        if (in_array($current, $legacy, true)) {
+            $value['nav_text_logo']['font_name'] = $sarasa;
         }
     }
     return $value;
