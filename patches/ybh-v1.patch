@@ -1,6 +1,6 @@
 diff --git a/css/ybh.css b/css/ybh.css
 new file mode 100644
-index 0000000..d47d5a4
+index 0000000..7b3f6d7
 --- /dev/null
 +++ b/css/ybh.css
 @@ -0,0 +1,545 @@
@@ -74,7 +74,7 @@ index 0000000..d47d5a4
 +}
 +@font-face {
 +  font-family: 'Sarasa UI SC';
-+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiSC-RegularItalic.woff2') format('woff2');
++  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiSC-Italic.woff2') format('woff2');
 +  font-weight: 400;
 +  font-style: italic;
 +  font-display: swap;
@@ -144,7 +144,7 @@ index 0000000..d47d5a4
 +}
 +@font-face {
 +  font-family: 'Sarasa UI TC';
-+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiTC-RegularItalic.woff2') format('woff2');
++  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiTC-Italic.woff2') format('woff2');
 +  font-weight: 400;
 +  font-style: italic;
 +  font-display: swap;
@@ -214,7 +214,7 @@ index 0000000..d47d5a4
 +}
 +@font-face {
 +  font-family: 'Sarasa UI J';
-+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiJ-RegularItalic.woff2') format('woff2');
++  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiJ-Italic.woff2') format('woff2');
 +  font-weight: 400;
 +  font-style: italic;
 +  font-display: swap;
@@ -284,7 +284,7 @@ index 0000000..d47d5a4
 +}
 +@font-face {
 +  font-family: 'Sarasa UI K';
-+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiK-RegularItalic.woff2') format('woff2');
++  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiK-Italic.woff2') format('woff2');
 +  font-weight: 400;
 +  font-style: italic;
 +  font-display: swap;
@@ -354,7 +354,7 @@ index 0000000..d47d5a4
 +}
 +@font-face {
 +  font-family: 'Sarasa UI HC';
-+  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiHC-RegularItalic.woff2') format('woff2');
++  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiHC-Italic.woff2') format('woff2');
 +  font-weight: 400;
 +  font-style: italic;
 +  font-display: swap;
