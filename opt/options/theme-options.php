@@ -4076,6 +4076,14 @@ $prefix = 'iro_options';
         'default' => true
       ),
 
+      array(
+        'id' => 'ybh_local_fontawesome',
+        'type' => 'switcher',
+        'title' => __('FontAwesome 图标本地化','sakurairo_csf'),
+        'label' => __('默认开启：图标 CSS 与字体整体改用自家 CDN（download.yibianhui.cn），修复部分网络下 zstatic 不可达导致的全站图标无法显示','sakurairo_csf'),
+        'default' => true
+      ),
+
     )
   ) );
 

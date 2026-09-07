@@ -575,20 +575,28 @@ body.ybh-exhibit-compact.ybh-exhibit-cols-4 .bento-medium {
 body.ybh-exhibit-compact.ybh-exhibit-cols-3 .bento-medium {
   grid-column: span 4;
 }
-/* 文字避让：标题与描述浮层收紧，互不遮挡 */
+/* 文字避让：标题/描述浮层收紧 + 去位移去遮罩，杜绝裁字与淡化 */
 body.ybh-exhibit-compact .card-title-wrapper {
-  padding: 0.55rem 0.9rem;
+  padding: 0.5rem 0.9rem;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.35) 70%, transparent 100%);
+  mask-image: none;
+  -webkit-mask-image: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 body.ybh-exhibit-compact .bento-card-title {
-  font-size: 0.82rem;
+  font-size: 0.85rem;
 }
 body.ybh-exhibit-compact .card-info {
-  padding: 1.9rem 0.9rem 0.55rem;
+  padding: 1.6rem 0.9rem 0.5rem;
+  transform: none;
+  opacity: 1;
+  transition: none;
 }
 body.ybh-exhibit-compact .card-description {
   font-size: 0.78rem;
   line-height: 1.45;
-  opacity: 0.95;
+  opacity: 1;
 }
 /* 响应式逐级回落 */
 @media (max-width: 1280px) {
@@ -621,7 +629,8 @@ body.ybh-exhibit-compact .card-description {
 }
 
 /* ---------- 文章列表：两列 + 禁用摘要 ---------- */
-body.ybh-postlist-2col #primary .site-main {
+/* :has 限定：仅当 main 里确实有文章卡时才启用网格，避免影响文章页/独立页面的排版 */
+body.ybh-postlist-2col #primary .site-main:has(> .post-list-thumb) {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0 15px;
@@ -641,7 +650,7 @@ body.ybh-postlist-noexcerpt .post-list-thumb .post-title {
   bottom: 10%;
 }
 @media (max-width: 860px) {
-  body.ybh-postlist-2col #primary .site-main {
+  body.ybh-postlist-2col #primary .site-main:has(> .post-list-thumb) {
     grid-template-columns: 1fr;
   }
 }

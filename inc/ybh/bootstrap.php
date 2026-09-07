@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
 }
 
 define('YBH_FONT_CDN', 'https://download.yibianhui.cn/fonts');
-define('YBH_VERSION', '1.1.1');
+define('YBH_VERSION', '1.1.2');
 
 /**
  * 0) YBH 调整项开关 → body class（CSS 按类生效，全部可在「YBH 魔改」设置区切换）。
@@ -105,6 +105,15 @@ function ybh_font_option_defaults($value)
         if (in_array($current, $legacy, true)) {
             $value['nav_text_logo']['font_name'] = $sarasa;
         }
+    }
+
+    /**
+     * 2.5) FontAwesome 本地化：zstatic CDN 在部分网络下不可达导致全站图标
+     *     显示为豆腐/空白；全量 CSS+webfonts 已镜像至自家 CDN，此处整体切换
+     *     （header 预加载/样式表、404 页、编辑器样式均走 fontawesome_source）。
+     */
+    if (iro_opt('ybh_local_fontawesome', true)) {
+        $value['fontawesome_source'] = YBH_FONT_CDN . '/fontawesome/css/all.min.css';
     }
     return $value;
 }
