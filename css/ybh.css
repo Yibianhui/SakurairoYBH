@@ -524,22 +524,124 @@ body.dark .header-info p {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-/* ---------- 展台：单行展示数量 3 → 4（响应式逐级回落） ---------- */
-.bento-medium {
+/* ---------- 展台：单行展示数量 3 → 4（响应式逐级回落；body 前缀抬高优先级，与加载顺序解耦） ---------- */
+body .bento-medium {
   grid-column: span 3;
 }
 @media (max-width: 1280px) {
-  .bento-medium {
+  body .bento-medium {
     grid-column: span 4;
   }
 }
 @media (max-width: 1080px) {
-  .bento-medium {
+  body .bento-medium {
     grid-column: span 6;
   }
 }
 @media (max-width: 768px) {
-  .bento-medium {
+  body .bento-medium {
     grid-column: span 12;
+  }
+}
+
+/* ============================================================
+   YBH 1.1 · 选项化调整（「YBH 魔改」设置区，body class 驱动）
+   ============================================================ */
+
+/* ---------- 导航：随机文章按钮（骰子右侧） ---------- */
+#ybh-random-post {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+#ybh-random-post i {
+  font-size: 15px;
+}
+
+/* ---------- 展台紧凑模式：单行 6 张、纵向缩短、浮层收紧 ---------- */
+body.ybh-exhibit-compact .bento-medium {
+  grid-row: span 1;
+  min-height: 8.75rem;
+}
+body.ybh-exhibit-compact.ybh-exhibit-cols-6 .bento-medium {
+  grid-column: span 2;
+}
+body.ybh-exhibit-compact.ybh-exhibit-cols-4 .bento-medium {
+  grid-column: span 3;
+}
+body.ybh-exhibit-compact.ybh-exhibit-cols-3 .bento-medium {
+  grid-column: span 4;
+}
+/* 文字避让：标题与描述浮层收紧，互不遮挡 */
+body.ybh-exhibit-compact .card-title-wrapper {
+  padding: 0.55rem 0.9rem;
+}
+body.ybh-exhibit-compact .bento-card-title {
+  font-size: 0.82rem;
+}
+body.ybh-exhibit-compact .card-info {
+  padding: 1.9rem 0.9rem 0.55rem;
+}
+body.ybh-exhibit-compact .card-description {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  opacity: 0.95;
+}
+/* 响应式逐级回落 */
+@media (max-width: 1280px) {
+  body.ybh-exhibit-compact.ybh-exhibit-cols-6 .bento-medium,
+  body.ybh-exhibit-compact.ybh-exhibit-cols-4 .bento-medium {
+    grid-column: span 3;
+  }
+  body.ybh-exhibit-compact.ybh-exhibit-cols-3 .bento-medium {
+    grid-column: span 4;
+  }
+}
+@media (max-width: 1080px) {
+  body.ybh-exhibit-compact.ybh-exhibit-cols-6 .bento-medium,
+  body.ybh-exhibit-compact.ybh-exhibit-cols-4 .bento-medium {
+    grid-column: span 4;
+  }
+  body.ybh-exhibit-compact.ybh-exhibit-cols-3 .bento-medium {
+    grid-column: span 6;
+  }
+}
+@media (max-width: 768px) {
+  body.ybh-exhibit-compact .bento-medium {
+    grid-column: span 6;
+  }
+}
+@media (max-width: 560px) {
+  body.ybh-exhibit-compact .bento-medium {
+    grid-column: span 12;
+  }
+}
+
+/* ---------- 文章列表：两列 + 禁用摘要 ---------- */
+body.ybh-postlist-2col #primary .site-main {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 15px;
+  align-items: start;
+}
+body.ybh-postlist-2col #primary .site-main > *:not(.post-list-thumb) {
+  grid-column: 1 / -1;
+}
+body.ybh-postlist-2col .post-list-thumb {
+  float: none;
+  width: auto;
+}
+body.ybh-postlist-noexcerpt .post-list-thumb .post-excerpt {
+  display: none;
+}
+body.ybh-postlist-noexcerpt .post-list-thumb .post-title {
+  bottom: 10%;
+}
+@media (max-width: 860px) {
+  body.ybh-postlist-2col #primary .site-main {
+    grid-template-columns: 1fr;
   }
 }

@@ -3995,6 +3995,91 @@ $prefix = 'iro_options';
   ) );
 
   Sakurairo_CSF::createSection($prefix, array(
+    'title' => __('YBH 魔改','sakurairo_csf'),
+    'icon'        => 'fa fa-magic',
+    'description' => __('SakurairoYBH 专属调整项，全部可随时开关，恢复默认请用下方开关','sakurairo_csf'),
+    'fields'      => array(
+
+      array(
+        'type'    => 'subheading',
+        'content' => __('展台（首页展示区）','sakurairo_csf'),
+      ),
+
+      array(
+        'id' => 'ybh_exhibit_compact',
+        'type' => 'switcher',
+        'title' => __('展台紧凑模式','sakurairo_csf'),
+        'label' => __('缩短卡片高度并压缩标题/描述浮层，单行可容纳更多卡片，整体占空间更小','sakurairo_csf'),
+        'default' => true
+      ),
+
+      array(
+        'id' => 'ybh_exhibit_cols',
+        'type' => 'select',
+        'title' => __('紧凑模式单行卡片数','sakurairo_csf'),
+        'dependency' => array( 'ybh_exhibit_compact', '==', 'true', '', 'true' ),
+        'options'     => array(
+          '6'  => __('6 张（单行铺满）','sakurairo_csf'),
+          '4'  => __('4 张','sakurairo_csf'),
+          '3'  => __('3 张（原版密度）','sakurairo_csf'),
+        ),
+        'default'     => '6'
+      ),
+
+      array(
+        'type'    => 'subheading',
+        'content' => __('文章列表','sakurairo_csf'),
+      ),
+
+      array(
+        'id' => 'ybh_postlist_no_excerpt',
+        'type' => 'switcher',
+        'title' => __('禁用文章卡摘要','sakurairo_csf'),
+        'label' => __('列表卡片不再显示摘要文字，标题位置相应下移','sakurairo_csf'),
+        'default' => true
+      ),
+
+      array(
+        'id' => 'ybh_postlist_columns',
+        'type' => 'select',
+        'title' => __('文章列表列数','sakurairo_csf'),
+        'options'     => array(
+          '2'  => __('两列','sakurairo_csf'),
+          '1'  => __('单列（原版）','sakurairo_csf'),
+        ),
+        'default'     => '2'
+      ),
+
+      array(
+        'type'    => 'subheading',
+        'content' => __('导航栏','sakurairo_csf'),
+      ),
+
+      array(
+        'id' => 'ybh_random_post_btn',
+        'type' => 'switcher',
+        'title' => __('随机文章按钮','sakurairo_csf'),
+        'label' => __('在「随机封面」骰子按钮右侧增加一个随机跳转到文章的按钮','sakurairo_csf'),
+        'default' => true
+      ),
+
+      array(
+        'type'    => 'subheading',
+        'content' => __('性能','sakurairo_csf'),
+      ),
+
+      array(
+        'id' => 'ybh_trim_gfonts',
+        'type' => 'switcher',
+        'title' => __('裁剪 Google Fonts（Noto Serif/Sans SC + Fira Code）','sakurairo_csf'),
+        'label' => __('默认开启：移除 header 中硬编码的 Google Fonts 引用（国内阻塞源）。代码块字体将回退到系统等宽字体；关闭开关即可恢复引用','sakurairo_csf'),
+        'default' => true
+      ),
+
+    )
+  ) );
+
+  Sakurairo_CSF::createSection($prefix, array(
     'title' => __('Backup&Recovery','sakurairo_csf'),
     'icon'        => 'fa fa-shield',
     'description' => __('Backup or Recovery your theme options','sakurairo_csf'),

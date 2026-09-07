@@ -150,6 +150,17 @@ $show_user_avatar = (bool)iro_opt('nav_user_menu',true);
     <?php } ?>
     </script>
     <?php endif; //选项全在menu-wrapper中，防止bg-switch隐藏宽度变化导致brand缩放?>
+
+    <?php if (iro_opt('ybh_random_post_btn', true)): ?>
+      <a class="bg-switch" id="ybh-random-post"
+         href="<?php echo esc_url(add_query_arg('random_post', '1', home_url('/'))); ?>"
+         title="<?php esc_attr_e('随机文章', 'sakurairo'); ?>">
+        <i class="fa-solid fa-shuffle" aria-hidden="true"></i>
+        <span class="screen-reader-text">
+          <?php esc_html_e('随机文章', 'sakurairo'); ?>
+        </span>
+      </a>
+    <?php endif; ?>
   </div>
 
   <div class="mo-toc-button">

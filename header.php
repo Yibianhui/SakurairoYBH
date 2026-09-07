@@ -63,7 +63,7 @@ header('X-Frame-Options: SAMEORIGIN');
 
     <!-- 优化资源加载 -->
     <meta http-equiv="x-dns-prefetch-control" content="on">
-    <link rel="preconnect" href="https://<?= esc_attr(iro_opt('gfonts_api', 'fonts.googleapis.com')); ?>">
+    <?php if (!iro_opt('ybh_trim_gfonts', true)): ?><link rel="preconnect" href="https://<?= esc_attr(iro_opt('gfonts_api', 'fonts.googleapis.com')); ?>"><?php endif; ?>
     <link rel="preconnect" href="https://s4.zstatic.net" crossorigin>
 
     <link rel="preload" href="<?php echo (iro_opt('fontawesome_source','https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css') ?? 'https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css')?>" as="style">
@@ -74,8 +74,10 @@ header('X-Frame-Options: SAMEORIGIN');
     <?php wp_head(); ?>
     <link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?>｜<?php bloginfo('description'); ?>" href="<?php bloginfo('rss2_url'); ?>" />
     
+    <?php if (!iro_opt('ybh_trim_gfonts', true)): ?>
     <link rel="preload" as="style" href="https://<?= esc_attr(iro_opt('gfonts_api', 'fonts.googleapis.com')); ?>/css?family=Noto+Serif+SC|Noto+Sans+SC|Fira+Code<?= esc_attr(iro_opt('gfonts_add_name')); ?>&display=swap">
     <link rel="stylesheet" href="https://<?= esc_attr(iro_opt('gfonts_api', 'fonts.googleapis.com')); ?>/css?family=Noto+Serif+SC|Noto+Sans+SC|Fira+Code<?= esc_attr(iro_opt('gfonts_add_name')); ?>&display=swap" media="all">
+    <?php endif; //YBH：默认裁剪 Google Fonts（国内阻塞源），需要时在「YBH 魔改」里关掉开关即可恢复 ?>
     <?php if (iro_opt('google_analytics_id')) : ?>
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=<?= esc_attr(iro_opt('google_analytics_id')); ?>"></script>
@@ -248,6 +250,17 @@ header('X-Frame-Options: SAMEORIGIN');
                         <?php esc_html_e('Random Background', 'sakurairo'); ?>
                     </span>
                 </div>
+            <?php endif; ?>
+
+            <?php if (iro_opt('ybh_random_post_btn', true)): ?>
+                <a class="bg-switch" id="ybh-random-post"
+                   href="<?php echo esc_url(add_query_arg('random_post', '1', home_url('/'))); ?>"
+                   title="<?php esc_attr_e('随机文章', 'sakurairo'); ?>">
+                    <i class="fa-solid fa-shuffle" aria-hidden="true"></i>
+                    <span class="screen-reader-text">
+                        <?php esc_html_e('随机文章', 'sakurairo'); ?>
+                    </span>
+                </a>
             <?php endif; ?>
         </div>
 

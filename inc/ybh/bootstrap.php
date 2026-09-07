@@ -8,6 +8,7 @@
  * - 字体 CDN 预连接 + 首屏关键字重预加载
  * - 裁剪前端 Emoji 脚本（后台保留，dashboard-emoji-fix 不受影响）
  * - 注册友链批量导入工具
+ * - 1.1：展台紧凑模式 / 文章列表摘要与列数 / 导航随机文章按钮（均可在「YBH 魔改」设置区切换）
  *
  * @package SakurairoYBH
  */
@@ -17,7 +18,51 @@ if (!defined('ABSPATH')) {
 }
 
 define('YBH_FONT_CDN', 'https://download.yibianhui.cn/fonts');
-define('YBH_VERSION', '1.0.0');
+define('YBH_VERSION', '1.1.1');
+
+/**
+ * 0) YBH 调整项开关 → body class（CSS 按类生效，全部可在「YBH 魔改」设置区切换）。
+ */
+add_filter('body_class', 'ybh_body_classes');
+function ybh_body_classes($classes)
+{
+    if (iro_opt('ybh_exhibit_compact', true)) {
+        $classes[] = 'ybh-exhibit-compact';
+        $cols = (string) iro_opt('ybh_exhibit_cols', '6');
+        $classes[] = 'ybh-exhibit-cols-' . (in_array($cols, array('3', '4', '6'), true) ? $cols : '6');
+    }
+    if (iro_opt('ybh_postlist_no_excerpt', true)) {
+        $classes[] = 'ybh-postlist-noexcerpt';
+    }
+    if ((string) iro_opt('ybh_postlist_columns', '2') === '2') {
+        $classes[] = 'ybh-postlist-2col';
+    }
+    return $classes;
+}
+
+/**
+ * 0.5) 随机文章：/?random_post=1 → 302 到一篇随机已发布文章。
+ */
+add_action('template_redirect', 'ybh_random_post_redirect');
+function ybh_random_post_redirect()
+{
+    if (!isset($_GET['random_post'])) {
+        return;
+    }
+    $posts = get_posts(array(
+        'numberposts' => 1,
+        'orderby' => 'rand',
+        'post_type' => 'post',
+        'post_status' => 'publish',
+        'ignore_sticky_posts' => true,
+    ));
+    if (!empty($posts)) {
+        wp_safe_redirect(get_permalink($posts[0]), 302);
+        exit;
+    }
+    wp_safe_redirect(home_url('/'), 302);
+    exit;
+}
 
 /**
  * 1) 上游在 admin_init 会把非 Sakurairo 目录强制改名回 Sakurairo，
@@ -65,16 +110,17 @@ function ybh_font_option_defaults($value)
 }
 
 /**
- * 3) YBH 样式层：排在 iro-dark / iro-responsive 之后，保证覆盖顺序。
+ * 3) YBH 样式层：直接在 wp_head 打印，优先级 10 —— 保证排在主题组合 CSS（优先级 9）
+ *    或 iro-* 系列（wp_print_styles=8）之后；不使用 wp_enqueue_style，
+ *    避免因依赖 handle（iro-dark/iro-responsive 仅在非组合分支注册）缺失而被整体跳过。
  */
-add_action('wp_enqueue_scripts', 'ybh_enqueue_layer', 20);
+add_action('wp_head', 'ybh_enqueue_layer', 10);
 function ybh_enqueue_layer()
 {
-    wp_enqueue_style(
-        'ybh-layer',
-        get_template_directory_uri() . '/css/ybh.css',
-        array('iro-dark', 'iro-responsive'),
-        IRO_VERSION . '-ybh' . YBH_VERSION
+    printf(
+        '<link rel="stylesheet" id="ybh-layer-css" href="%s/css/ybh.css?ver=%s">' . "\n",
+        esc_url(get_template_directory_uri()),
+        esc_attr(IRO_VERSION . '-ybh' . YBH_VERSION)
     );
 }
 
