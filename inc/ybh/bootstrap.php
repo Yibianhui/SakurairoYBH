@@ -17,8 +17,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('YBH_FONT_CDN', 'https://download.yibianhui.cn/fonts');
-define('YBH_VERSION', '1.1.2');
+define('YBH_FONT_CDN', 'https://www.yibianhui.cn/wp-content/uploads/ybh-fonts');
+define('YBH_VERSION', '1.1.3');
 
 /**
  * 0) YBH 调整项开关 → body class（CSS 按类生效，全部可在「YBH 魔改」设置区切换）。
@@ -139,7 +139,7 @@ function ybh_enqueue_layer()
 add_action('wp_head', 'ybh_resource_hints', 2);
 function ybh_resource_hints()
 {
-    echo '<link rel="preconnect" href="https://download.yibianhui.cn" crossorigin>' . "\n";
+    // 字体已同源化（wp-content/uploads/ybh-fonts），无需跨域 preconnect。
     $preloads = array(
         'sarasa/SarasaUiSC-Regular.woff2',
         'sarasa/SarasaUiSC-SemiBold.woff2',

@@ -7,14 +7,14 @@
 /* ---------- 字体：Klee One（本地化） ---------- */
 @font-face {
   font-family: 'Klee One';
-  src: url('https://download.yibianhui.cn/fonts/klee-one/KleeOne-Regular.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/klee-one/KleeOne-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Klee One';
-  src: url('https://download.yibianhui.cn/fonts/klee-one/KleeOne-SemiBold.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/klee-one/KleeOne-SemiBold.woff2') format('woff2');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -23,7 +23,7 @@
 /* ---------- 字体：Boxed ---------- */
 @font-face {
   font-family: 'Boxed';
-  src: url('https://download.yibianhui.cn/fonts/Boxed-Regular.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/Boxed-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -33,350 +33,350 @@
    文件名规则：Regular 斜体 = -Italic.woff2，其余字重斜体 = -{字重}Italic.woff2 */
 @font-face {
   font-family: 'Sarasa UI SC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiSC-ExtraLight.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-ExtraLight.woff2') format('woff2');
   font-weight: 200;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI SC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiSC-ExtraLightItalic.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-ExtraLightItalic.woff2') format('woff2');
   font-weight: 200;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI SC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiSC-Light.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-Light.woff2') format('woff2');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI SC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiSC-LightItalic.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-LightItalic.woff2') format('woff2');
   font-weight: 300;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI SC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiSC-Regular.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI SC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiSC-Italic.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-Italic.woff2') format('woff2');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI SC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiSC-SemiBold.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-SemiBold.woff2') format('woff2');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI SC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiSC-SemiBoldItalic.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-SemiBoldItalic.woff2') format('woff2');
   font-weight: 600;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI SC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiSC-Bold.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI SC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiSC-BoldItalic.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-BoldItalic.woff2') format('woff2');
   font-weight: 700;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI TC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiTC-ExtraLight.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-ExtraLight.woff2') format('woff2');
   font-weight: 200;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI TC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiTC-ExtraLightItalic.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-ExtraLightItalic.woff2') format('woff2');
   font-weight: 200;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI TC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiTC-Light.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-Light.woff2') format('woff2');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI TC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiTC-LightItalic.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-LightItalic.woff2') format('woff2');
   font-weight: 300;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI TC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiTC-Regular.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI TC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiTC-Italic.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-Italic.woff2') format('woff2');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI TC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiTC-SemiBold.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-SemiBold.woff2') format('woff2');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI TC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiTC-SemiBoldItalic.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-SemiBoldItalic.woff2') format('woff2');
   font-weight: 600;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI TC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiTC-Bold.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI TC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiTC-BoldItalic.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-BoldItalic.woff2') format('woff2');
   font-weight: 700;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI J';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiJ-ExtraLight.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-ExtraLight.woff2') format('woff2');
   font-weight: 200;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI J';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiJ-ExtraLightItalic.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-ExtraLightItalic.woff2') format('woff2');
   font-weight: 200;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI J';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiJ-Light.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-Light.woff2') format('woff2');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI J';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiJ-LightItalic.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-LightItalic.woff2') format('woff2');
   font-weight: 300;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI J';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiJ-Regular.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI J';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiJ-Italic.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-Italic.woff2') format('woff2');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI J';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiJ-SemiBold.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-SemiBold.woff2') format('woff2');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI J';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiJ-SemiBoldItalic.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-SemiBoldItalic.woff2') format('woff2');
   font-weight: 600;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI J';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiJ-Bold.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI J';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiJ-BoldItalic.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-BoldItalic.woff2') format('woff2');
   font-weight: 700;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI K';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiK-ExtraLight.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-ExtraLight.woff2') format('woff2');
   font-weight: 200;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI K';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiK-ExtraLightItalic.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-ExtraLightItalic.woff2') format('woff2');
   font-weight: 200;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI K';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiK-Light.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-Light.woff2') format('woff2');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI K';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiK-LightItalic.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-LightItalic.woff2') format('woff2');
   font-weight: 300;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI K';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiK-Regular.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI K';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiK-Italic.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-Italic.woff2') format('woff2');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI K';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiK-SemiBold.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-SemiBold.woff2') format('woff2');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI K';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiK-SemiBoldItalic.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-SemiBoldItalic.woff2') format('woff2');
   font-weight: 600;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI K';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiK-Bold.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI K';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiK-BoldItalic.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-BoldItalic.woff2') format('woff2');
   font-weight: 700;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI HC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiHC-ExtraLight.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-ExtraLight.woff2') format('woff2');
   font-weight: 200;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI HC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiHC-ExtraLightItalic.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-ExtraLightItalic.woff2') format('woff2');
   font-weight: 200;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI HC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiHC-Light.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-Light.woff2') format('woff2');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI HC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiHC-LightItalic.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-LightItalic.woff2') format('woff2');
   font-weight: 300;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI HC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiHC-Regular.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI HC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiHC-Italic.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-Italic.woff2') format('woff2');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI HC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiHC-SemiBold.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-SemiBold.woff2') format('woff2');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI HC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiHC-SemiBoldItalic.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-SemiBoldItalic.woff2') format('woff2');
   font-weight: 600;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI HC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiHC-Bold.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Sarasa UI HC';
-  src: url('https://download.yibianhui.cn/fonts/sarasa/SarasaUiHC-BoldItalic.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-BoldItalic.woff2') format('woff2');
   font-weight: 700;
   font-style: italic;
   font-display: swap;
@@ -385,7 +385,7 @@
 /* ---------- 字体：天珩字库 TH-Tshyn（分片 fallback，unicode-range 按实际 cmap 生成） ---------- */
 @font-face {
   font-family: 'TH-Tshyn';
-  src: url('https://download.yibianhui.cn/fonts/tianheng/TH-Tshyn-P0.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/tianheng/TH-Tshyn-P0.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -393,7 +393,7 @@
 }
 @font-face {
   font-family: 'TH-Tshyn';
-  src: url('https://download.yibianhui.cn/fonts/tianheng/TH-Tshyn-P1.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/tianheng/TH-Tshyn-P1.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -401,7 +401,7 @@
 }
 @font-face {
   font-family: 'TH-Tshyn';
-  src: url('https://download.yibianhui.cn/fonts/tianheng/TH-Tshyn-P2.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/tianheng/TH-Tshyn-P2.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -409,7 +409,7 @@
 }
 @font-face {
   font-family: 'TH-Tshyn';
-  src: url('https://download.yibianhui.cn/fonts/tianheng/TH-Tshyn-P16.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/tianheng/TH-Tshyn-P16.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -419,21 +419,21 @@
 /* ---------- 字体：霞鹜文楷（子集优先，全量兜底；同一字体声明 italic 面，中文斜体不再合成歪斜） ---------- */
 @font-face {
   font-family: 'LXGW WenKai';
-  src: url('https://download.yibianhui.cn/fonts/lxgw/LXGWWenKai-Regular.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/lxgw/LXGWWenKai-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'LXGW WenKai';
-  src: url('https://download.yibianhui.cn/fonts/lxgw/LXGWWenKai-Regular.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/lxgw/LXGWWenKai-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'LXGW WenKai';
-  src: url('https://download.yibianhui.cn/fonts/lxgw/LXGWWenKai-Regular-subset.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/lxgw/LXGWWenKai-Regular-subset.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -441,7 +441,7 @@
 }
 @font-face {
   font-family: 'LXGW WenKai';
-  src: url('https://download.yibianhui.cn/fonts/lxgw/LXGWWenKai-Regular-subset.woff2') format('woff2');
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/lxgw/LXGWWenKai-Regular-subset.woff2') format('woff2');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
