@@ -25,6 +25,10 @@ function check_php_version($preset_version)
 
 require get_template_directory() . '/opt/option-framework.php';
 
+// YBH 增量层：必须在 $GLOBALS['iro_options'] 填充之前加载，
+// 其 option_iro_options filter 才能作用于 iro_opt 的数据源（v1.1.3 及之前挂在文件末尾，覆盖从未生效）
+require get_template_directory() . '/inc/ybh/bootstrap.php';
+
 if (!function_exists('iro_opt')) {
     $GLOBALS['iro_options'] = get_option('iro_options');
     function iro_opt($option = '', $default = null)
@@ -4526,11 +4530,3 @@ function iro_action_operator()
 }
 iro_action_operator();
 
-
-/*
- * ============================================================
- * SakurairoYBH · YBH 增量层（fork 魔改入口）
- * 目录名校验解除 / 默认字体 / YBH 样式层 / 资源提示 / 友链批量导入
- * ============================================================
- */
-require get_template_directory() . '/inc/ybh/bootstrap.php';

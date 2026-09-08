@@ -18,7 +18,19 @@ if (!defined('ABSPATH')) {
 }
 
 define('YBH_FONT_CDN', 'https://www.yibianhui.cn/wp-content/uploads/ybh-fonts');
-define('YBH_VERSION', '1.1.3');
+define('YBH_VERSION', '1.1.4');
+
+/**
+ * FontAwesome 本地化（双保险）：
+ * - 主路径：下方 option_iro_options filter（functions.php 已改为先加载本文件再填充
+ *   $GLOBALS['iro_options']，filter 会对 iro_opt 的数据源生效）；
+ * - 保险路径：若本文件被移回全局数组填充之后加载（旧顺序），此处直接改写全局数组。
+ * 两种加载顺序下，header / 404 / 编辑器样式里的 fontawesome_source 都走同源 ybh-fonts。
+ */
+if (isset($GLOBALS['iro_options']) && is_array($GLOBALS['iro_options'])
+    && ($GLOBALS['iro_options']['ybh_local_fontawesome'] ?? true)) {
+    $GLOBALS['iro_options']['fontawesome_source'] = YBH_FONT_CDN . '/fontawesome/css/all.min.css';
+}
 
 /**
  * 0) YBH 调整项开关 → body class（CSS 按类生效，全部可在「YBH 魔改」设置区切换）。
@@ -109,10 +121,12 @@ function ybh_font_option_defaults($value)
 
     /**
      * 2.5) FontAwesome 本地化：zstatic CDN 在部分网络下不可达导致全站图标
-     *     显示为豆腐/空白；全量 CSS+webfonts 已镜像至自家 CDN，此处整体切换
+     *     显示为豆腐/空白；图标 CSS+webfonts 已同源化至 ybh-fonts，此处整体切换
      *     （header 预加载/样式表、404 页、编辑器样式均走 fontawesome_source）。
+     *     注意从 $value 原始数组读开关：全局 $GLOBALS['iro_options'] 此刻可能尚未填充，
+     *     iro_opt 会走 default，导致开关无法关闭。
      */
-    if (iro_opt('ybh_local_fontawesome', true)) {
+    if (($value['ybh_local_fontawesome'] ?? true)) {
         $value['fontawesome_source'] = YBH_FONT_CDN . '/fontawesome/css/all.min.css';
     }
     return $value;
