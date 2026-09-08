@@ -1,9 +1,9 @@
 diff --git a/css/ybh.css b/css/ybh.css
 new file mode 100644
-index 0000000..c49854b
+index 0000000..428a4a0
 --- /dev/null
 +++ b/css/ybh.css
-@@ -0,0 +1,656 @@
+@@ -0,0 +1,675 @@
 +/* ============================================================
 +   SakurairoYBH · YBH 增量层
 +   字体系统 / 标题签名可读性 / 展台密度 / 默认样式烘焙
@@ -455,19 +455,19 @@ index 0000000..c49854b
 +}
 +
 +/* ---------- 默认字体：按页面语言自动匹配更纱地区版本，天珩真·兜底 ---------- */
-+:lang(zh),:lang(zh-CN),:lang(zh-Hans) {
++:lang(zh):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fas):not(.far):not(.fab):not(.fa-classic),:lang(zh-CN):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fas):not(.far):not(.fab):not(.fa-classic),:lang(zh-Hans):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fas):not(.far):not(.fab):not(.fa-classic) {
 +  font-family: 'Sarasa UI SC', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
 +}
-+:lang(zh-TW),:lang(zh-Hant) {
++:lang(zh-TW):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fas):not(.far):not(.fab):not(.fa-classic),:lang(zh-Hant):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fas):not(.far):not(.fab):not(.fa-classic) {
 +  font-family: 'Sarasa UI TC', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
 +}
-+:lang(zh-HK),:lang(zh-MO) {
++:lang(zh-HK):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fas):not(.far):not(.fab):not(.fa-classic),:lang(zh-MO):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fas):not(.far):not(.fab):not(.fa-classic) {
 +  font-family: 'Sarasa UI HC', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
 +}
-+:lang(ja) {
++:lang(ja):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fas):not(.far):not(.fab):not(.fa-classic) {
 +  font-family: 'Sarasa UI J', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
 +}
-+:lang(ko) {
++:lang(ko):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fas):not(.far):not(.fab):not(.fa-classic) {
 +  font-family: 'Sarasa UI K', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
 +}
 +
@@ -660,6 +660,26 @@ index 0000000..c49854b
 +    grid-template-columns: 1fr;
 +  }
 +}
++
++/* ---------- YBH 1.1.5：FontAwesome 图标字体锚定 ----------
++   根因：:lang(zh-Hans) 特异性(0,1,0)与 .fa-solid(0,1,0) 相同且加载在后，
++   图标(语言继承 zh-Hans)的字体栈被 :lang 规则夺走，PUA 码位落到
++   TH-Tshyn P0(U+F000-F414) → 图标显示成天珩字库的"生僻字"字形。
++   上面 :lang 规则已加 :not() 排除；此处再用 !important 双保险锚定。 */
++i.fa-solid, i.fa-classic, i.fas,
++svg.fa-solid, svg.fa-classic {
++  font-family: 'Font Awesome 6 Free' !important;
++  font-weight: 900;
++}
++i.fa-regular, i.far {
++  font-family: 'Font Awesome 6 Free' !important;
++  font-weight: 400;
++}
++i.fa-brands, i.fab, svg.fa-brands {
++  font-family: 'Font Awesome 6 Brands' !important;
++  font-weight: 400;
++}
+\ No newline at end of file
 diff --git a/functions.php b/functions.php
 index b715c41..a92d15e 100644
 --- a/functions.php
@@ -751,7 +771,7 @@ index 692c56d..2e6786f 100644
          <div class="mo-toc-button">
 diff --git a/inc/ybh/bootstrap.php b/inc/ybh/bootstrap.php
 new file mode 100644
-index 0000000..762f7a4
+index 0000000..098fea2
 --- /dev/null
 +++ b/inc/ybh/bootstrap.php
 @@ -0,0 +1,187 @@
@@ -775,7 +795,7 @@ index 0000000..762f7a4
 +}
 +
 +define('YBH_FONT_CDN', 'https://www.yibianhui.cn/wp-content/uploads/ybh-fonts');
-+define('YBH_VERSION', '1.1.4');
++define('YBH_VERSION', '1.1.5');
 +
 +/**
 + * FontAwesome 本地化（双保险）：
@@ -1323,6 +1343,1385 @@ index 1085d0f..dbe9c77 100644
    Sakurairo_CSF::createSection($prefix, array(
      'title' => __('Backup&Recovery','sakurairo_csf'),
      'icon'        => 'fa fa-shield',
+diff --git a/patches/ybh-v1.patch b/patches/ybh-v1.patch
+new file mode 100644
+index 0000000..2df4eab
+--- /dev/null
++++ b/patches/ybh-v1.patch
+@@ -0,0 +1,1373 @@
++diff --git a/css/ybh.css b/css/ybh.css
++new file mode 100644
++index 0000000..c49854b
++--- /dev/null
+++++ b/css/ybh.css
++@@ -0,0 +1,656 @@
+++/* ============================================================
+++   SakurairoYBH · YBH 增量层
+++   字体系统 / 标题签名可读性 / 展台密度 / 默认样式烘焙
+++   由 inc/ybh/bootstrap.php 入队，加载于主题主样式之后
+++   ============================================================ */
+++
+++/* ---------- 字体：Klee One（本地化） ---------- */
+++@font-face {
+++  font-family: 'Klee One';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/klee-one/KleeOne-Regular.woff2') format('woff2');
+++  font-weight: 400;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Klee One';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/klee-one/KleeOne-SemiBold.woff2') format('woff2');
+++  font-weight: 600;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++
+++/* ---------- 字体：Boxed ---------- */
+++@font-face {
+++  font-family: 'Boxed';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/Boxed-Regular.woff2') format('woff2');
+++  font-weight: 400;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++
+++/* ---------- 字体：更纱黑体 Sarasa UI（5 地区 × 5 字重 × 正/斜） ----------
+++   文件名规则：Regular 斜体 = -Italic.woff2，其余字重斜体 = -{字重}Italic.woff2 */
+++@font-face {
+++  font-family: 'Sarasa UI SC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-ExtraLight.woff2') format('woff2');
+++  font-weight: 200;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI SC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-ExtraLightItalic.woff2') format('woff2');
+++  font-weight: 200;
+++  font-style: italic;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI SC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-Light.woff2') format('woff2');
+++  font-weight: 300;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI SC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-LightItalic.woff2') format('woff2');
+++  font-weight: 300;
+++  font-style: italic;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI SC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-Regular.woff2') format('woff2');
+++  font-weight: 400;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI SC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-Italic.woff2') format('woff2');
+++  font-weight: 400;
+++  font-style: italic;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI SC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-SemiBold.woff2') format('woff2');
+++  font-weight: 600;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI SC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-SemiBoldItalic.woff2') format('woff2');
+++  font-weight: 600;
+++  font-style: italic;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI SC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-Bold.woff2') format('woff2');
+++  font-weight: 700;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI SC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-BoldItalic.woff2') format('woff2');
+++  font-weight: 700;
+++  font-style: italic;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI TC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-ExtraLight.woff2') format('woff2');
+++  font-weight: 200;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI TC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-ExtraLightItalic.woff2') format('woff2');
+++  font-weight: 200;
+++  font-style: italic;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI TC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-Light.woff2') format('woff2');
+++  font-weight: 300;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI TC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-LightItalic.woff2') format('woff2');
+++  font-weight: 300;
+++  font-style: italic;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI TC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-Regular.woff2') format('woff2');
+++  font-weight: 400;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI TC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-Italic.woff2') format('woff2');
+++  font-weight: 400;
+++  font-style: italic;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI TC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-SemiBold.woff2') format('woff2');
+++  font-weight: 600;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI TC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-SemiBoldItalic.woff2') format('woff2');
+++  font-weight: 600;
+++  font-style: italic;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI TC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-Bold.woff2') format('woff2');
+++  font-weight: 700;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI TC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-BoldItalic.woff2') format('woff2');
+++  font-weight: 700;
+++  font-style: italic;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI J';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-ExtraLight.woff2') format('woff2');
+++  font-weight: 200;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI J';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-ExtraLightItalic.woff2') format('woff2');
+++  font-weight: 200;
+++  font-style: italic;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI J';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-Light.woff2') format('woff2');
+++  font-weight: 300;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI J';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-LightItalic.woff2') format('woff2');
+++  font-weight: 300;
+++  font-style: italic;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI J';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-Regular.woff2') format('woff2');
+++  font-weight: 400;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI J';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-Italic.woff2') format('woff2');
+++  font-weight: 400;
+++  font-style: italic;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI J';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-SemiBold.woff2') format('woff2');
+++  font-weight: 600;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI J';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-SemiBoldItalic.woff2') format('woff2');
+++  font-weight: 600;
+++  font-style: italic;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI J';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-Bold.woff2') format('woff2');
+++  font-weight: 700;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI J';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-BoldItalic.woff2') format('woff2');
+++  font-weight: 700;
+++  font-style: italic;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI K';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-ExtraLight.woff2') format('woff2');
+++  font-weight: 200;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI K';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-ExtraLightItalic.woff2') format('woff2');
+++  font-weight: 200;
+++  font-style: italic;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI K';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-Light.woff2') format('woff2');
+++  font-weight: 300;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI K';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-LightItalic.woff2') format('woff2');
+++  font-weight: 300;
+++  font-style: italic;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI K';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-Regular.woff2') format('woff2');
+++  font-weight: 400;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI K';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-Italic.woff2') format('woff2');
+++  font-weight: 400;
+++  font-style: italic;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI K';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-SemiBold.woff2') format('woff2');
+++  font-weight: 600;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI K';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-SemiBoldItalic.woff2') format('woff2');
+++  font-weight: 600;
+++  font-style: italic;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI K';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-Bold.woff2') format('woff2');
+++  font-weight: 700;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI K';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-BoldItalic.woff2') format('woff2');
+++  font-weight: 700;
+++  font-style: italic;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI HC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-ExtraLight.woff2') format('woff2');
+++  font-weight: 200;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI HC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-ExtraLightItalic.woff2') format('woff2');
+++  font-weight: 200;
+++  font-style: italic;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI HC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-Light.woff2') format('woff2');
+++  font-weight: 300;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI HC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-LightItalic.woff2') format('woff2');
+++  font-weight: 300;
+++  font-style: italic;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI HC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-Regular.woff2') format('woff2');
+++  font-weight: 400;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI HC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-Italic.woff2') format('woff2');
+++  font-weight: 400;
+++  font-style: italic;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI HC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-SemiBold.woff2') format('woff2');
+++  font-weight: 600;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI HC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-SemiBoldItalic.woff2') format('woff2');
+++  font-weight: 600;
+++  font-style: italic;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI HC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-Bold.woff2') format('woff2');
+++  font-weight: 700;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'Sarasa UI HC';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-BoldItalic.woff2') format('woff2');
+++  font-weight: 700;
+++  font-style: italic;
+++  font-display: swap;
+++}
+++
+++/* ---------- 字体：天珩字库 TH-Tshyn（分片 fallback，unicode-range 按实际 cmap 生成） ---------- */
+++@font-face {
+++  font-family: 'TH-Tshyn';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/tianheng/TH-Tshyn-P0.woff2') format('woff2');
+++  font-weight: 400;
+++  font-style: normal;
+++  font-display: swap;
+++  unicode-range: U+0000-0E5B,U+0E81-0EDF,U+0F00-0FDA,U+1000-D7FB,U+E000-E1EC,U+E295,U+E37E,U+E400-E4DA,U+E500-E6CE,U+E815-E864,U+ED2B-ED43,U+ED73-ED8C,U+EDC9-EE0B,U+EE2F-EE68,U+EE8C-EE9A,U+F000-F414,U+F4EE-F4FF,U+F900-FAD9,U+FB00-FDCF,U+FDF0-FFFD,U+16FF0-16FF1,U+E0001-E007F,U+E0100-E01EF;
+++}
+++@font-face {
+++  font-family: 'TH-Tshyn';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/tianheng/TH-Tshyn-P1.woff2') format('woff2');
+++  font-weight: 400;
+++  font-style: normal;
+++  font-display: swap;
+++  unicode-range: U+0000-007E,U+3099-309A,U+10000-1005D,U+10080-101A0,U+101D0-101FD,U+10280-103D5,U+10400-107BF,U+10800-108AF,U+108E0-10959,U+10980-10A9F,U+10AC0-10BAF,U+10C00-10C48,U+10C80-10D8F,U+10E60-10ED8,U+10EFA-10F89,U+10FB0-11241,U+11280-114D9,U+11580-115DD,U+11600-11746,U+11800-1183B,U+118A0-11959,U+119A0-11B09,U+11B60-11B67,U+11BC0-11CB6,U+11D00-11DE9,U+11EE0-11F5A,U+11FB0-12399,U+12400-12543,U+12F90-14646,U+16100-16139,U+16800-16B8F,U+16D40-16D79,U+16E40-16ED3,U+16F00-16F9F,U+16FE0-18CDA,U+18CFF-18D1E,U+18D80-18DF2,U+1AFF0-1B2FB,U+1BC00-1BCA3,U+1CC00-1CFC3,U+1D000-1D245,U+1D2C0-1D378,U+1D400-1DAAF,U+1DF00-1DF8A,U+1DFC5-1E06D,U+1E08F,U+1E100-1E14F,U+1E290-1E2FF,U+1E4D0-1E4F9,U+1E5D0-1E5FF,U+1E6C0-1E6FF,U+1E7E0-1E8D6,U+1E900-1E95F,U+1EC71-1ECB4,U+1ED01-1ED3D,U+1EE00-1EEBB,U+1EEF0-1EEF1,U+1F000-1F1AD,U+1F1E6-1F265,U+1F300-1F8D8,U+1F900-1FBFA,U+30000-33479;
+++}
+++@font-face {
+++  font-family: 'TH-Tshyn';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/tianheng/TH-Tshyn-P2.woff2') format('woff2');
+++  font-weight: 400;
+++  font-style: normal;
+++  font-display: swap;
+++  unicode-range: U+0000-007E,U+16FF0-16FF1,U+20000-2A6DF,U+2A700-2EE5D,U+2F800-2FA1D;
+++}
+++@font-face {
+++  font-family: 'TH-Tshyn';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/tianheng/TH-Tshyn-P16.woff2') format('woff2');
+++  font-weight: 400;
+++  font-style: normal;
+++  font-display: swap;
+++  unicode-range: U+0000-007E,U+100000-101AFF,U+102000-10437B,U+105000-10C7B7;
+++}
+++
+++/* ---------- 字体：霞鹜文楷（子集优先，全量兜底；同一字体声明 italic 面，中文斜体不再合成歪斜） ---------- */
+++@font-face {
+++  font-family: 'LXGW WenKai';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/lxgw/LXGWWenKai-Regular.woff2') format('woff2');
+++  font-weight: 400;
+++  font-style: normal;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'LXGW WenKai';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/lxgw/LXGWWenKai-Regular.woff2') format('woff2');
+++  font-weight: 400;
+++  font-style: italic;
+++  font-display: swap;
+++}
+++@font-face {
+++  font-family: 'LXGW WenKai';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/lxgw/LXGWWenKai-Regular-subset.woff2') format('woff2');
+++  font-weight: 400;
+++  font-style: normal;
+++  font-display: swap;
+++  unicode-range: U+0020-00FF,U+2000-206F,U+3000-303F,U+4E00-9FA5,U+FF00-FFEF;
+++}
+++@font-face {
+++  font-family: 'LXGW WenKai';
+++  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/lxgw/LXGWWenKai-Regular-subset.woff2') format('woff2');
+++  font-weight: 400;
+++  font-style: italic;
+++  font-display: swap;
+++  unicode-range: U+0020-00FF,U+2000-206F,U+3000-303F,U+4E00-9FA5,U+FF00-FFEF;
+++}
+++
+++/* ---------- 默认字体：按页面语言自动匹配更纱地区版本，天珩真·兜底 ---------- */
+++:lang(zh),:lang(zh-CN),:lang(zh-Hans) {
+++  font-family: 'Sarasa UI SC', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
+++}
+++:lang(zh-TW),:lang(zh-Hant) {
+++  font-family: 'Sarasa UI TC', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
+++}
+++:lang(zh-HK),:lang(zh-MO) {
+++  font-family: 'Sarasa UI HC', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
+++}
+++:lang(ja) {
+++  font-family: 'Sarasa UI J', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
+++}
+++:lang(ko) {
+++  font-family: 'Sarasa UI K', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
+++}
+++
+++/* ---------- 中文斜体 = 霞鹜文楷（楷体作为斜体“声音”；代码块内不劫持） ---------- */
+++i, em, cite, var, dfn {
+++  font-family: 'LXGW WenKai', 'Sarasa UI SC', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
+++}
+++code i, code em, pre i, pre em, kbd i, kbd em, samp i, samp em {
+++  font-family: inherit;
+++}
+++
+++/* ---------- 默认样式烘焙（与站点「额外 CSS」一致，作为主题默认值；额外 CSS 仍可随时覆盖） ---------- */
+++.entry-content p {
+++  margin: 0;
+++  text-indent: 2em;
+++  line-height: 2;
+++}
+++:root {
+++  text-autospace: normal;
+++  text-spacing-trim: trim-start;
+++}
+++
+++/* 签名栏字体：弃用需走 Google 的 Noto Serif SC，改本地 Klee One */
+++.header-info p {
+++  font-family: 'Klee One', 'Sarasa UI SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+++}
+++
+++/* ---------- 标题与签名：多背景色可读性 ---------- */
+++/* 首屏大标题：深色柔光保护层（亮背景压暗、暗背景提对比），不改变主题配色 */
+++.center-text {
+++  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.55), 0 0 30px rgba(0, 0, 0, 0.28);
+++}
+++.center-text.glitch::before,
+++.center-text.glitch::after {
+++  text-shadow: none;
+++}
+++/* 导航栏站名 */
+++.site-title {
+++  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+++}
+++/* 首屏头像描边 */
+++.focusinfo .header-tou img {
+++  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+++}
+++/* 签名栏：无论封面明暗都保底可读（透明度下限 + 双模式底色） */
+++.header-info {
+++  background: rgba(255, 255, 255, max(var(--homepage_widget_transparency, 1), 0.45));
+++  border-color: rgba(255, 255, 255, max(var(--homepage_widget_transparency, 1), 0.45));
+++}
+++.header-info p {
+++  color: var(--theme-skin, #505050);
+++  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
+++}
+++body.dark .header-info {
+++  background: rgba(28, 28, 30, max(var(--homepage_widget_transparency, 1), 0.5));
+++  border-color: rgba(255, 255, 255, 0.08);
+++}
+++body.dark .header-info p {
+++  color: #ebebeb;
+++  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+++}
+++
+++/* ---------- 展台：单行展示数量 3 → 4（响应式逐级回落；body 前缀抬高优先级，与加载顺序解耦） ---------- */
+++body .bento-medium {
+++  grid-column: span 3;
+++}
+++@media (max-width: 1280px) {
+++  body .bento-medium {
+++    grid-column: span 4;
+++  }
+++}
+++@media (max-width: 1080px) {
+++  body .bento-medium {
+++    grid-column: span 6;
+++  }
+++}
+++@media (max-width: 768px) {
+++  body .bento-medium {
+++    grid-column: span 12;
+++  }
+++}
+++
+++/* ============================================================
+++   YBH 1.1 · 选项化调整（「YBH 魔改」设置区，body class 驱动）
+++   ============================================================ */
+++
+++/* ---------- 导航：随机文章按钮（骰子右侧） ---------- */
+++#ybh-random-post {
+++  flex: 0 0 auto;
+++  display: inline-flex;
+++  align-items: center;
+++  height: 100%;
+++  color: inherit;
+++  text-decoration: none;
+++}
+++#ybh-random-post i {
+++  font-size: 15px;
+++}
+++
+++/* ---------- 展台紧凑模式：单行 6 张、纵向缩短、浮层收紧 ---------- */
+++body.ybh-exhibit-compact .bento-medium {
+++  grid-row: span 1;
+++  min-height: 8.75rem;
+++}
+++body.ybh-exhibit-compact.ybh-exhibit-cols-6 .bento-medium {
+++  grid-column: span 2;
+++}
+++body.ybh-exhibit-compact.ybh-exhibit-cols-4 .bento-medium {
+++  grid-column: span 3;
+++}
+++body.ybh-exhibit-compact.ybh-exhibit-cols-3 .bento-medium {
+++  grid-column: span 4;
+++}
+++/* 文字避让：标题/描述浮层收紧 + 去位移去遮罩，杜绝裁字与淡化 */
+++body.ybh-exhibit-compact .card-title-wrapper {
+++  padding: 0.5rem 0.9rem;
+++  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.35) 70%, transparent 100%);
+++  mask-image: none;
+++  -webkit-mask-image: none;
+++  backdrop-filter: none;
+++  -webkit-backdrop-filter: none;
+++}
+++body.ybh-exhibit-compact .bento-card-title {
+++  font-size: 0.85rem;
+++}
+++body.ybh-exhibit-compact .card-info {
+++  padding: 1.6rem 0.9rem 0.5rem;
+++  transform: none;
+++  opacity: 1;
+++  transition: none;
+++}
+++body.ybh-exhibit-compact .card-description {
+++  font-size: 0.78rem;
+++  line-height: 1.45;
+++  opacity: 1;
+++}
+++/* 响应式逐级回落 */
+++@media (max-width: 1280px) {
+++  body.ybh-exhibit-compact.ybh-exhibit-cols-6 .bento-medium,
+++  body.ybh-exhibit-compact.ybh-exhibit-cols-4 .bento-medium {
+++    grid-column: span 3;
+++  }
+++  body.ybh-exhibit-compact.ybh-exhibit-cols-3 .bento-medium {
+++    grid-column: span 4;
+++  }
+++}
+++@media (max-width: 1080px) {
+++  body.ybh-exhibit-compact.ybh-exhibit-cols-6 .bento-medium,
+++  body.ybh-exhibit-compact.ybh-exhibit-cols-4 .bento-medium {
+++    grid-column: span 4;
+++  }
+++  body.ybh-exhibit-compact.ybh-exhibit-cols-3 .bento-medium {
+++    grid-column: span 6;
+++  }
+++}
+++@media (max-width: 768px) {
+++  body.ybh-exhibit-compact .bento-medium {
+++    grid-column: span 6;
+++  }
+++}
+++@media (max-width: 560px) {
+++  body.ybh-exhibit-compact .bento-medium {
+++    grid-column: span 12;
+++  }
+++}
+++
+++/* ---------- 文章列表：两列 + 禁用摘要 ---------- */
+++/* :has 限定：仅当 main 里确实有文章卡时才启用网格，避免影响文章页/独立页面的排版 */
+++body.ybh-postlist-2col #primary .site-main:has(> .post-list-thumb) {
+++  display: grid;
+++  grid-template-columns: repeat(2, minmax(0, 1fr));
+++  gap: 0 15px;
+++  align-items: start;
+++}
+++body.ybh-postlist-2col #primary .site-main > *:not(.post-list-thumb) {
+++  grid-column: 1 / -1;
+++}
+++body.ybh-postlist-2col .post-list-thumb {
+++  float: none;
+++  width: auto;
+++}
+++body.ybh-postlist-noexcerpt .post-list-thumb .post-excerpt {
+++  display: none;
+++}
+++body.ybh-postlist-noexcerpt .post-list-thumb .post-title {
+++  bottom: 10%;
+++}
+++@media (max-width: 860px) {
+++  body.ybh-postlist-2col #primary .site-main:has(> .post-list-thumb) {
+++    grid-template-columns: 1fr;
+++  }
+++}
++diff --git a/functions.php b/functions.php
++index b715c41..a92d15e 100644
++--- a/functions.php
+++++ b/functions.php
++@@ -25,6 +25,10 @@ function check_php_version($preset_version)
++ 
++ require get_template_directory() . '/opt/option-framework.php';
++ 
+++// YBH 增量层：必须在 $GLOBALS['iro_options'] 填充之前加载，
+++// 其 option_iro_options filter 才能作用于 iro_opt 的数据源（v1.1.3 及之前挂在文件末尾，覆盖从未生效）
+++require get_template_directory() . '/inc/ybh/bootstrap.php';
+++
++ if (!function_exists('iro_opt')) {
++     $GLOBALS['iro_options'] = get_option('iro_options');
++     function iro_opt($option = '', $default = null)
++@@ -72,27 +76,10 @@ if (iro_opt('php_notice_filter') != 'inner') {
++ 
++ //Update-Checker
++ 
++-require 'update-checker/update-checker.php';
++-use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
++-
++-function UpdateCheck($url, $flag = 'Sakurairo')
++-{
++-    return PucFactory::buildUpdateChecker(
++-        $url,
++-        __FILE__,
++-        $flag
++-    );
++-}
++-switch (iro_opt('iro_update_source')) {
++-    case 'github':
++-        $iroThemeUpdateChecker = UpdateCheck('https://github.com/mirai-mamori/Sakurairo', 'Sakurairo');
++-        break;
++-    case 'upyun':
++-        $iroThemeUpdateChecker = UpdateCheck('https://api.fuukei.org/update/jsdelivr.json');
++-        break;
++-    case 'official_building':
++-        $iroThemeUpdateChecker = UpdateCheck('https://api.fuukei.org/update/' . iro_opt('iro_update_channel') . '/check.json');
++-}
+++/*
+++ * YBH: fork 版禁用上游更新检查（api.fuukei.org / mirai-mamori），
+++ * 避免官方更新覆盖魔改内容；后续如需恢复，随上游同步后手动开启。
+++ */
++ 
++ add_action('init', 'set_user_locale');
++ function set_user_locale() {
++diff --git a/header.php b/header.php
++index 692c56d..2e6786f 100644
++--- a/header.php
+++++ b/header.php
++@@ -63,7 +63,7 @@ header('X-Frame-Options: SAMEORIGIN');
++ 
++     <!-- 优化资源加载 -->
++     <meta http-equiv="x-dns-prefetch-control" content="on">
++-    <link rel="preconnect" href="https://<?= esc_attr(iro_opt('gfonts_api', 'fonts.googleapis.com')); ?>">
+++    <?php if (!iro_opt('ybh_trim_gfonts', true)): ?><link rel="preconnect" href="https://<?= esc_attr(iro_opt('gfonts_api', 'fonts.googleapis.com')); ?>"><?php endif; ?>
++     <link rel="preconnect" href="https://s4.zstatic.net" crossorigin>
++ 
++     <link rel="preload" href="<?php echo (iro_opt('fontawesome_source','https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css') ?? 'https://s4.zstatic.net/ajax/libs/font-awesome/6.7.2/css/all.min.css')?>" as="style">
++@@ -74,8 +74,10 @@ header('X-Frame-Options: SAMEORIGIN');
++     <?php wp_head(); ?>
++     <link rel="alternate" type="application/rss+xml" title="<?php bloginfo('name'); ?>｜<?php bloginfo('description'); ?>" href="<?php bloginfo('rss2_url'); ?>" />
++     
+++    <?php if (!iro_opt('ybh_trim_gfonts', true)): ?>
++     <link rel="preload" as="style" href="https://<?= esc_attr(iro_opt('gfonts_api', 'fonts.googleapis.com')); ?>/css?family=Noto+Serif+SC|Noto+Sans+SC|Fira+Code<?= esc_attr(iro_opt('gfonts_add_name')); ?>&display=swap">
++     <link rel="stylesheet" href="https://<?= esc_attr(iro_opt('gfonts_api', 'fonts.googleapis.com')); ?>/css?family=Noto+Serif+SC|Noto+Sans+SC|Fira+Code<?= esc_attr(iro_opt('gfonts_add_name')); ?>&display=swap" media="all">
+++    <?php endif; //YBH：默认裁剪 Google Fonts（国内阻塞源），需要时在「YBH 魔改」里关掉开关即可恢复 ?>
++     <?php if (iro_opt('google_analytics_id')) : ?>
++         <!-- Global site tag (gtag.js) - Google Analytics -->
++         <script async src="https://www.googletagmanager.com/gtag/js?id=<?= esc_attr(iro_opt('google_analytics_id')); ?>"></script>
++@@ -249,6 +251,17 @@ header('X-Frame-Options: SAMEORIGIN');
++                     </span>
++                 </div>
++             <?php endif; ?>
+++
+++            <?php if (iro_opt('ybh_random_post_btn', true)): ?>
+++                <a class="bg-switch" id="ybh-random-post"
+++                   href="<?php echo esc_url(add_query_arg('random_post', '1', home_url('/'))); ?>"
+++                   title="<?php esc_attr_e('随机文章', 'sakurairo'); ?>">
+++                    <i class="fa-solid fa-shuffle" aria-hidden="true"></i>
+++                    <span class="screen-reader-text">
+++                        <?php esc_html_e('随机文章', 'sakurairo'); ?>
+++                    </span>
+++                </a>
+++            <?php endif; ?>
++         </div>
++ 
++         <div class="mo-toc-button">
++diff --git a/inc/ybh/bootstrap.php b/inc/ybh/bootstrap.php
++new file mode 100644
++index 0000000..762f7a4
++--- /dev/null
+++++ b/inc/ybh/bootstrap.php
++@@ -0,0 +1,187 @@
+++<?php
+++/**
+++ * SakurairoYBH · YBH 增量层（fork 魔改入口）
+++ *
+++ * - 摘除上游"主题目录必须叫 Sakurairo"的强制检查（保住 fork 目录名）
+++ * - 默认字体注入更纱黑体（仅当选项仍为旧默认/空值时，用户显式自定义优先）
+++ * - 加载 YBH 样式层 css/ybh.css（字体系统/标题签名/展台/默认样式烘焙）
+++ * - 字体 CDN 预连接 + 首屏关键字重预加载
+++ * - 裁剪前端 Emoji 脚本（后台保留，dashboard-emoji-fix 不受影响）
+++ * - 注册友链批量导入工具
+++ * - 1.1：展台紧凑模式 / 文章列表摘要与列数 / 导航随机文章按钮（均可在「YBH 魔改」设置区切换）
+++ *
+++ * @package SakurairoYBH
+++ */
+++
+++if (!defined('ABSPATH')) {
+++    exit;
+++}
+++
+++define('YBH_FONT_CDN', 'https://www.yibianhui.cn/wp-content/uploads/ybh-fonts');
+++define('YBH_VERSION', '1.1.4');
+++
+++/**
+++ * FontAwesome 本地化（双保险）：
+++ * - 主路径：下方 option_iro_options filter（functions.php 已改为先加载本文件再填充
+++ *   $GLOBALS['iro_options']，filter 会对 iro_opt 的数据源生效）；
+++ * - 保险路径：若本文件被移回全局数组填充之后加载（旧顺序），此处直接改写全局数组。
+++ * 两种加载顺序下，header / 404 / 编辑器样式里的 fontawesome_source 都走同源 ybh-fonts。
+++ */
+++if (isset($GLOBALS['iro_options']) && is_array($GLOBALS['iro_options'])
+++    && ($GLOBALS['iro_options']['ybh_local_fontawesome'] ?? true)) {
+++    $GLOBALS['iro_options']['fontawesome_source'] = YBH_FONT_CDN . '/fontawesome/css/all.min.css';
+++}
+++
+++/**
+++ * 0) YBH 调整项开关 → body class（CSS 按类生效，全部可在「YBH 魔改」设置区切换）。
+++ */
+++add_filter('body_class', 'ybh_body_classes');
+++function ybh_body_classes($classes)
+++{
+++    if (iro_opt('ybh_exhibit_compact', true)) {
+++        $classes[] = 'ybh-exhibit-compact';
+++        $cols = (string) iro_opt('ybh_exhibit_cols', '6');
+++        $classes[] = 'ybh-exhibit-cols-' . (in_array($cols, array('3', '4', '6'), true) ? $cols : '6');
+++    }
+++    if (iro_opt('ybh_postlist_no_excerpt', true)) {
+++        $classes[] = 'ybh-postlist-noexcerpt';
+++    }
+++    if ((string) iro_opt('ybh_postlist_columns', '2') === '2') {
+++        $classes[] = 'ybh-postlist-2col';
+++    }
+++    return $classes;
+++}
+++
+++/**
+++ * 0.5) 随机文章：/?random_post=1 → 302 到一篇随机已发布文章。
+++ */
+++add_action('template_redirect', 'ybh_random_post_redirect');
+++function ybh_random_post_redirect()
+++{
+++    if (!isset($_GET['random_post'])) {
+++        return;
+++    }
+++    $posts = get_posts(array(
+++        'numberposts' => 1,
+++        'orderby' => 'rand',
+++        'post_type' => 'post',
+++        'post_status' => 'publish',
+++        'ignore_sticky_posts' => true,
+++    ));
+++    if (!empty($posts)) {
+++        wp_safe_redirect(get_permalink($posts[0]), 302);
+++        exit;
+++    }
+++    wp_safe_redirect(home_url('/'), 302);
+++    exit;
+++}
+++
+++/**
+++ * 1) 上游在 admin_init 会把非 Sakurairo 目录强制改名回 Sakurairo，
+++ *    对 fork 而言这是破坏性行为，必须解除。
+++ *    （functions.php 中的钩子注册先于本文件加载，此处摘除即可生效）
+++ */
+++remove_action('admin_init', 'theme_folder_check_on_admin_init');
+++
+++/**
+++ * 2) 默认字体：更纱黑体。
+++ *    站点数据库中多处字体选项仍存有旧默认 Noto Serif SC / Noto Sans SC
+++ *    （Google 字体，国内访客实际回退到系统字体），统一替换为更纱黑体全栈；
+++ *    用户显式设置的其他字体一律尊重（保留原格式选项）。
+++ *    覆盖键：全局默认/正文/导航菜单/页脚/换肤菜单/栏目标题/站名。
+++ */
+++add_filter('option_iro_options', 'ybh_font_option_defaults');
+++function ybh_font_option_defaults($value)
+++{
+++    if (!is_array($value)) {
+++        return $value;
+++    }
+++    $sarasa = "'Sarasa UI SC','PingFang SC','Microsoft YaHei','TH-Tshyn',sans-serif";
+++    $legacy = array('', 'Noto Serif SC', 'Noto Sans SC', 'Sarasa UI SC');
+++    $keys = array(
+++        'global_default_font',
+++        'global_font_2',
+++        'nav_menu_font',
+++        'footer_text_font',
+++        'style_menu_font',
+++        'area_title_font',
+++    );
+++    foreach ($keys as $key) {
+++        $current = isset($value[$key]) ? trim((string) $value[$key]) : '';
+++        if (in_array($current, $legacy, true)) {
+++            $value[$key] = $sarasa;
+++        }
+++    }
+++    if (isset($value['nav_text_logo']) && is_array($value['nav_text_logo'])) {
+++        $current = isset($value['nav_text_logo']['font_name']) ? trim((string) $value['nav_text_logo']['font_name']) : '';
+++        if (in_array($current, $legacy, true)) {
+++            $value['nav_text_logo']['font_name'] = $sarasa;
+++        }
+++    }
+++
+++    /**
+++     * 2.5) FontAwesome 本地化：zstatic CDN 在部分网络下不可达导致全站图标
+++     *     显示为豆腐/空白；图标 CSS+webfonts 已同源化至 ybh-fonts，此处整体切换
+++     *     （header 预加载/样式表、404 页、编辑器样式均走 fontawesome_source）。
+++     *     注意从 $value 原始数组读开关：全局 $GLOBALS['iro_options'] 此刻可能尚未填充，
+++     *     iro_opt 会走 default，导致开关无法关闭。
+++     */
+++    if (($value['ybh_local_fontawesome'] ?? true)) {
+++        $value['fontawesome_source'] = YBH_FONT_CDN . '/fontawesome/css/all.min.css';
+++    }
+++    return $value;
+++}
+++
+++/**
+++ * 3) YBH 样式层：直接在 wp_head 打印，优先级 10 —— 保证排在主题组合 CSS（优先级 9）
+++ *    或 iro-* 系列（wp_print_styles=8）之后；不使用 wp_enqueue_style，
+++ *    避免因依赖 handle（iro-dark/iro-responsive 仅在非组合分支注册）缺失而被整体跳过。
+++ */
+++add_action('wp_head', 'ybh_enqueue_layer', 10);
+++function ybh_enqueue_layer()
+++{
+++    printf(
+++        '<link rel="stylesheet" id="ybh-layer-css" href="%s/css/ybh.css?ver=%s">' . "\n",
+++        esc_url(get_template_directory_uri()),
+++        esc_attr(IRO_VERSION . '-ybh' . YBH_VERSION)
+++    );
+++}
+++
+++/**
+++ * 4) 字体 CDN 预连接 + 首屏关键字重预加载（Preload 只给确定会用到的字重）。
+++ */
+++add_action('wp_head', 'ybh_resource_hints', 2);
+++function ybh_resource_hints()
+++{
+++    // 字体已同源化（wp-content/uploads/ybh-fonts），无需跨域 preconnect。
+++    $preloads = array(
+++        'sarasa/SarasaUiSC-Regular.woff2',
+++        'sarasa/SarasaUiSC-SemiBold.woff2',
+++        'lxgw/LXGWWenKai-Regular-subset.woff2',
+++    );
+++    foreach ($preloads as $file) {
+++        printf(
+++            '<link rel="preload" href="%s/%s" as="font" type="font/woff2" crossorigin>' . "\n",
+++            YBH_FONT_CDN,
+++            $file
+++        );
+++    }
+++}
+++
+++/**
+++ * 5) 前端 Emoji 脚本裁剪（后台不动，dashboard-emoji-fix.css 依旧有效）。
+++ */
+++add_action('init', 'ybh_trim_front_emoji');
+++function ybh_trim_front_emoji()
+++{
+++    remove_action('wp_head', 'print_emoji_detection_script', 7);
+++    remove_action('wp_print_styles', 'print_emoji_styles');
+++    remove_action('embed_head', 'print_emoji_detection_script');
+++    remove_filter('the_content_feed', 'wp_staticize_emoji');
+++    remove_filter('comment_text_rss', 'wp_staticize_emoji');
+++}
+++
+++/**
+++ * 6) 友链批量导入工具（外观 → 友链批量导入）。
+++ */
+++require_once get_template_directory() . '/inc/ybh/friend-importer.php';
++diff --git a/inc/ybh/friend-importer.php b/inc/ybh/friend-importer.php
++new file mode 100644
++index 0000000..0726f62
++--- /dev/null
+++++ b/inc/ybh/friend-importer.php
++@@ -0,0 +1,231 @@
+++<?php
+++/**
+++ * SakurairoYBH · 友情链接批量导入工具
+++ *
+++ * 后台路径：外观 → 友链批量导入（权限：manage_links）
+++ *
+++ * 支持格式：每行一条友链，字段之间用 | 、Tab 或两个以上空格分隔：
+++ *   名称 | 链接URL | 描述（可选） | 头像图片URL（可选）
+++ *
+++ * - 以 # 或 ; 开头的行视为注释，自动跳过
+++ * - 链接未带协议时自动补全 https://
+++ * - 支持 IP 形式链接（如 http://192.168.1.10/ 、[2001:db8::1]）
+++ * - 可选按 URL 去重（对比已有书签与本次已导入条目）
+++ *
+++ * @package SakurairoYBH
+++ */
+++
+++if (!defined('ABSPATH')) {
+++    exit;
+++}
+++
+++add_action('admin_menu', 'ybh_friend_import_menu');
+++function ybh_friend_import_menu()
+++{
+++    add_theme_page(
+++        '友链批量导入',
+++        '友链批量导入',
+++        'manage_links',
+++        'ybh-friend-import',
+++        'ybh_friend_import_page'
+++    );
+++}
+++
+++/**
+++ * 解析单行文本 → 数组(name, url, description, image)；无效行返回 null。
+++ */
+++function ybh_friend_import_parse_line($line)
+++{
+++    $line = trim($line);
+++    if ($line === '' || $line[0] === '#' || $line[0] === ';') {
+++        return null;
+++    }
+++    $parts = preg_split('/\s*(?:\||\t|\s{2,})\s*/', $line);
+++    if (!is_array($parts)) {
+++        return null;
+++    }
+++    $parts = array_map('trim', $parts);
+++    $name = isset($parts[0]) ? $parts[0] : '';
+++    $url = isset($parts[1]) ? $parts[1] : '';
+++    if ($name === '' || $url === '') {
+++        return null;
+++    }
+++    return array(
+++        'name' => $name,
+++        'url' => $url,
+++        'description' => isset($parts[2]) ? $parts[2] : '',
+++        'image' => isset($parts[3]) ? $parts[3] : '',
+++    );
+++}
+++
+++/**
+++ * 规范化 URL：补协议 + 校验（FILTER_VALIDATE_URL 接受 IP 主机形式）。
+++ */
+++function ybh_friend_import_normalize_url($url)
+++{
+++    $url = trim((string) $url);
+++    if ($url === '') {
+++        return '';
+++    }
+++    if (!preg_match('#^https?://#i', $url)) {
+++        $url = 'https://' . $url;
+++    }
+++    if (!filter_var($url, FILTER_VALIDATE_URL)) {
+++        return '';
+++    }
+++    return esc_url_raw($url);
+++}
+++
+++/**
+++ * 处理导入请求，返回统计结果。
+++ */
+++function ybh_friend_import_handle()
+++{
+++    $raw = isset($_POST['ybh_import_data']) ? wp_unslash($_POST['ybh_import_data']) : '';
+++    $skip_dup = !empty($_POST['ybh_import_skip_dup']);
+++    $visible = (isset($_POST['ybh_import_visible']) && $_POST['ybh_import_visible'] === 'pending') ? 'N' : 'Y';
+++    $category = isset($_POST['ybh_import_category']) ? intval($_POST['ybh_import_category']) : 0;
+++
+++    $lines = preg_split('/\r\n|\r|\n/', $raw);
+++    $existing = array();
+++    foreach (get_bookmarks(array('hide_invisible' => false)) as $bm) {
+++        $existing[trailingslashit(strtolower($bm->link_url))] = true;
+++    }
+++
+++    $ok = array();
+++    $skipped = array();
+++    $failed = array();
+++    $seen = array();
+++
+++    foreach ($lines as $index => $line) {
+++        $no = $index + 1;
+++        $item = ybh_friend_import_parse_line($line);
+++        if ($item === null) {
+++            if (trim($line) !== '') {
+++                $failed[] = sprintf('第 %d 行：格式无效（需要至少「名称 链接」两个字段）', $no);
+++            }
+++            continue;
+++        }
+++
+++        $url = ybh_friend_import_normalize_url($item['url']);
+++        if ($url === '') {
+++            $failed[] = sprintf('第 %d 行：链接无效（%s）', $no, $item['url']);
+++            continue;
+++        }
+++
+++        $image = ybh_friend_import_normalize_url($item['image']);
+++
+++        $key = trailingslashit(strtolower($url));
+++        if ($skip_dup && (isset($existing[$key]) || isset($seen[$key]))) {
+++            $skipped[] = sprintf('第 %d 行：%s（%s）已存在，跳过', $no, $item['name'], $url);
+++            continue;
+++        }
+++        $seen[$key] = true;
+++
+++        $link_id = wp_insert_link(array(
+++            'link_name' => sanitize_text_field($item['name']),
+++            'link_url' => $url,
+++            'link_description' => sanitize_text_field($item['description']),
+++            'link_image' => $image,
+++            'link_target' => '_blank',
+++            'link_visible' => $visible,
+++            'link_rel' => 'friend',
+++            'link_rating' => 0,
+++        ));
+++
+++        if (is_wp_error($link_id) || !$link_id) {
+++            $failed[] = sprintf('第 %d 行：%s 写入失败', $no, $item['name']);
+++            continue;
+++        }
+++
+++        if ($category > 0) {
+++            wp_set_object_terms($link_id, array($category), 'link_category');
+++        }
+++        $ok[] = sprintf('第 %d 行：%s（%s）', $no, $item['name'], $url);
+++    }
+++
+++    return array('ok' => $ok, 'skipped' => $skipped, 'failed' => $failed);
+++}
+++
+++/**
+++ * 管理页面渲染。
+++ */
+++function ybh_friend_import_page()
+++{
+++    if (!current_user_can('manage_links')) {
+++        wp_die('权限不足：需要「manage_links」权限。');
+++    }
+++
+++    $result = null;
+++    if (isset($_POST['ybh_import_nonce']) && wp_verify_nonce($_POST['ybh_import_nonce'], 'ybh_friend_import')) {
+++        $result = ybh_friend_import_handle();
+++    }
+++
+++    $categories = get_terms(array(
+++        'taxonomy' => 'link_category',
+++        'hide_empty' => false,
+++    ));
+++    ?>
+++    <div class="wrap">
+++        <h1>友链批量导入 <span style="font-weight:normal;font-size:13px;color:#666;">SakurairoYBH</span></h1>
+++
+++        <?php if (is_array($result)) : ?>
+++            <div class="notice notice-success"><p>
+++                导入完成：成功 <strong><?php echo count($result['ok']); ?></strong> 条，
+++                跳过 <?php echo count($result['skipped']); ?> 条，
+++                失败 <?php echo count($result['failed']); ?> 条。
+++                <?php if (count($result['ok']) > 0) : ?>
+++                    <a href="<?php echo esc_url(admin_url('link-manager.php')); ?>">前往链接管理器查看 →</a>
+++                <?php endif; ?>
+++            </p></div>
+++            <?php if (!empty($result['failed'])) : ?>
+++                <div class="notice notice-warning"><p><strong>未成功明细：</strong><br>
+++                    <?php echo esc_html(implode("\n", $result['failed'])); ?></p></div>
+++            <?php endif; ?>
+++        <?php endif; ?>
+++
+++        <p>每行一条友链，字段用 <code>|</code>、Tab 或两个以上空格分隔；<code>#</code> 或 <code>;</code> 开头的行视为注释：</p>
+++        <p><code>站点名称 | https://example.com/ | 站点描述 | https://example.com/avatar.png</code></p>
+++        <p>支持 IP 形式链接（如 <code>http://192.168.1.10/</code>）；未带协议的链接自动补全 <code>https://</code>。</p>
+++
+++        <form method="post">
+++            <?php wp_nonce_field('ybh_friend_import', 'ybh_import_nonce'); ?>
+++            <table class="form-table" role="presentation">
+++                <tr>
+++                    <th scope="row"><label for="ybh_import_data">友链列表</label></th>
+++                    <td>
+++                        <textarea name="ybh_import_data" id="ybh_import_data" rows="12" class="large-text code"
+++                            placeholder="示例：&#10;张三的博客 | https://zhangsan.example.com/ | 前端开发 | https://zhangsan.example.com/avatar.png&#10;内网NAS | http://192.168.1.10/ | 家庭服务器"></textarea>
+++                    </td>
+++                </tr>
+++                <tr>
+++                    <th scope="row">导入选项</th>
+++                    <td>
+++                        <p>
+++                            <label><input type="checkbox" name="ybh_import_skip_dup" value="1" checked> 按 URL 去重（已存在的链接自动跳过）</label>
+++                        </p>
+++                        <p>
+++                            <label><input type="radio" name="ybh_import_visible" value="visible" checked> 立即可见</label>
+++                            &nbsp;&nbsp;
+++                            <label><input type="radio" name="ybh_import_visible" value="pending"> 待审核</label>
+++                        </p>
+++                        <p>
+++                            <label>归属链接分类：
+++                                <select name="ybh_import_category">
+++                                    <option value="0">不分类</option>
+++                                    <?php if (!is_wp_error($categories)) : ?>
+++                                        <?php foreach ($categories as $cat) : ?>
+++                                            <option value="<?php echo esc_attr($cat->term_id); ?>"><?php echo esc_html($cat->name); ?></option>
+++                                        <?php endforeach; ?>
+++                                    <?php endif; ?>
+++                                </select>
+++                            </label>
+++                        </p>
+++                    </td>
+++                </tr>
+++            </table>
+++            <?php submit_button('开始导入', 'primary', 'ybh_import_submit'); ?>
+++        </form>
+++    </div>
+++    <?php
+++}
++diff --git a/layouts/sakura_header.php b/layouts/sakura_header.php
++index 5b9acde..8f4e896 100644
++--- a/layouts/sakura_header.php
+++++ b/layouts/sakura_header.php
++@@ -150,6 +150,17 @@ $show_user_avatar = (bool)iro_opt('nav_user_menu',true);
++     <?php } ?>
++     </script>
++     <?php endif; //选项全在menu-wrapper中，防止bg-switch隐藏宽度变化导致brand缩放?>
+++
+++    <?php if (iro_opt('ybh_random_post_btn', true)): ?>
+++      <a class="bg-switch" id="ybh-random-post"
+++         href="<?php echo esc_url(add_query_arg('random_post', '1', home_url('/'))); ?>"
+++         title="<?php esc_attr_e('随机文章', 'sakurairo'); ?>">
+++        <i class="fa-solid fa-shuffle" aria-hidden="true"></i>
+++        <span class="screen-reader-text">
+++          <?php esc_html_e('随机文章', 'sakurairo'); ?>
+++        </span>
+++      </a>
+++    <?php endif; ?>
++   </div>
++ 
++   <div class="mo-toc-button">
++diff --git a/opt/options/theme-options.php b/opt/options/theme-options.php
++index 1085d0f..dbe9c77 100644
++--- a/opt/options/theme-options.php
+++++ b/opt/options/theme-options.php
++@@ -791,7 +791,7 @@ $prefix = 'iro_options';
++         'type' => 'text',
++         'title' => __('Global Default Font/Widgets Panel Font Switching A','sakurairo_csf'),
++         'desc' => __('Fill in the font name. For example: Noto Serif SC','sakurairo_csf'),
++-        'default' => 'Noto Serif SC'
+++        'default' => '\'Sarasa UI SC\',\'PingFang SC\',\'Microsoft YaHei\',\'TH-Tshyn\',sans-serif'
++       ),
++ 
++       array(
++@@ -800,7 +800,7 @@ $prefix = 'iro_options';
++         'title' => __('Widgets Panel Font Switching B','sakurairo_csf'),
++         'dependency' => array( 'widget_font', '==', 'true', '', 'true' ),
++         'desc' => __('Fill in the font name. For example: Noto Serif SC','sakurairo_csf'),
++-        'default' => 'Noto Sans SC'
+++        'default' => '\'Sarasa UI SC\',\'PingFang SC\',\'Microsoft YaHei\',\'TH-Tshyn\',sans-serif'
++       ),
++ 
++     )
++@@ -3994,6 +3994,99 @@ $prefix = 'iro_options';
++     )
++   ) );
++ 
+++  Sakurairo_CSF::createSection($prefix, array(
+++    'title' => __('YBH 魔改','sakurairo_csf'),
+++    'icon'        => 'fa fa-magic',
+++    'description' => __('SakurairoYBH 专属调整项，全部可随时开关，恢复默认请用下方开关','sakurairo_csf'),
+++    'fields'      => array(
+++
+++      array(
+++        'type'    => 'subheading',
+++        'content' => __('展台（首页展示区）','sakurairo_csf'),
+++      ),
+++
+++      array(
+++        'id' => 'ybh_exhibit_compact',
+++        'type' => 'switcher',
+++        'title' => __('展台紧凑模式','sakurairo_csf'),
+++        'label' => __('缩短卡片高度并压缩标题/描述浮层，单行可容纳更多卡片，整体占空间更小','sakurairo_csf'),
+++        'default' => true
+++      ),
+++
+++      array(
+++        'id' => 'ybh_exhibit_cols',
+++        'type' => 'select',
+++        'title' => __('紧凑模式单行卡片数','sakurairo_csf'),
+++        'dependency' => array( 'ybh_exhibit_compact', '==', 'true', '', 'true' ),
+++        'options'     => array(
+++          '6'  => __('6 张（单行铺满）','sakurairo_csf'),
+++          '4'  => __('4 张','sakurairo_csf'),
+++          '3'  => __('3 张（原版密度）','sakurairo_csf'),
+++        ),
+++        'default'     => '6'
+++      ),
+++
+++      array(
+++        'type'    => 'subheading',
+++        'content' => __('文章列表','sakurairo_csf'),
+++      ),
+++
+++      array(
+++        'id' => 'ybh_postlist_no_excerpt',
+++        'type' => 'switcher',
+++        'title' => __('禁用文章卡摘要','sakurairo_csf'),
+++        'label' => __('列表卡片不再显示摘要文字，标题位置相应下移','sakurairo_csf'),
+++        'default' => true
+++      ),
+++
+++      array(
+++        'id' => 'ybh_postlist_columns',
+++        'type' => 'select',
+++        'title' => __('文章列表列数','sakurairo_csf'),
+++        'options'     => array(
+++          '2'  => __('两列','sakurairo_csf'),
+++          '1'  => __('单列（原版）','sakurairo_csf'),
+++        ),
+++        'default'     => '2'
+++      ),
+++
+++      array(
+++        'type'    => 'subheading',
+++        'content' => __('导航栏','sakurairo_csf'),
+++      ),
+++
+++      array(
+++        'id' => 'ybh_random_post_btn',
+++        'type' => 'switcher',
+++        'title' => __('随机文章按钮','sakurairo_csf'),
+++        'label' => __('在「随机封面」骰子按钮右侧增加一个随机跳转到文章的按钮','sakurairo_csf'),
+++        'default' => true
+++      ),
+++
+++      array(
+++        'type'    => 'subheading',
+++        'content' => __('性能','sakurairo_csf'),
+++      ),
+++
+++      array(
+++        'id' => 'ybh_trim_gfonts',
+++        'type' => 'switcher',
+++        'title' => __('裁剪 Google Fonts（Noto Serif/Sans SC + Fira Code）','sakurairo_csf'),
+++        'label' => __('默认开启：移除 header 中硬编码的 Google Fonts 引用（国内阻塞源）。代码块字体将回退到系统等宽字体；关闭开关即可恢复引用','sakurairo_csf'),
+++        'default' => true
+++      ),
+++
+++      array(
+++        'id' => 'ybh_local_fontawesome',
+++        'type' => 'switcher',
+++        'title' => __('FontAwesome 图标本地化','sakurairo_csf'),
+++        'label' => __('默认开启：图标 CSS 与字体改用站点自身同源资源（wp-content/uploads/ybh-fonts），与字体系统一致，无需跨域授权','sakurairo_csf'),
+++        'default' => true
+++      ),
+++
+++    )
+++  ) );
+++
++   Sakurairo_CSF::createSection($prefix, array(
++     'title' => __('Backup&Recovery','sakurairo_csf'),
++     'icon'        => 'fa fa-shield',
++diff --git a/style.css b/style.css
++index fd8043c..9dd57f8 100644
++--- a/style.css
+++++ b/style.css
++@@ -1,12 +1,12 @@
++ @charset "utf-8";
++ 
++ /*
++-Theme Name: Sakurairo
++-Theme URI: https://github.com/mirai-mamori/Sakurairo
++-Author: Created by Fuukei
++-Author URI: https://docs.fuukei.org/
++-Description: A WordPress theme that is built with AI-assisted reading features, colorful, user-friendly, well-rounded, and rich in functionalities. (Based on Theme Sakura)
++-Version: 3.0.11
+++Theme Name: SakurairoYBH
+++Theme URI: https://github.com/Yibianhui/SakurairoYBH
+++Author: Yibianhui (based on Sakurairo by Fuukei)
+++Author URI: https://www.yibianhui.cn/
+++Description: SakurairoYBH —— 基于 Fuukei Sakurairo 的 YBH 魔改版：更纱黑体字体系统、标题签名可读性、展台密度、友链批量导入、性能优化与默认样式烘焙。A WordPress theme that is built with AI-assisted reading features, colorful, user-friendly, well-rounded, and rich in functionalities. (Based on Theme Sakura)
+++Version: 3.0.11-ybh1
++ Tested up to: 6.8
++ Requires at least: 6.0
++ Requires PHP: 8.0
++@@ -18,9 +18,22 @@ Tags: AI-assisted reading, Colorful, User-friendly, Well-rounded, Feature-rich
++ 
++ /* Base HTML Element Styles */
++ 
+++/*
+++ * YBH 性能修正：全局 `transition: all` 会让所有元素的所有属性（含触发重排的
+++ * width/height/top/margin）都参与过渡，是动画掉帧的主要来源。
+++ * 收敛为仅过渡视觉合成属性；i 元素的豁免规则保持不变。
+++ */
++ * {
++-  transition: all 0.4s cubic-bezier(0.07, 0.53, 0.65, 0.95);;
++-  -webkit-transition: all 0.4s cubic-bezier(0.07, 0.53, 0.65, 0.95);;
+++  transition:
+++    color 0.4s cubic-bezier(0.07, 0.53, 0.65, 0.95),
+++    background-color 0.4s cubic-bezier(0.07, 0.53, 0.65, 0.95),
+++    border-color 0.4s cubic-bezier(0.07, 0.53, 0.65, 0.95),
+++    fill 0.4s cubic-bezier(0.07, 0.53, 0.65, 0.95),
+++    stroke 0.4s cubic-bezier(0.07, 0.53, 0.65, 0.95),
+++    opacity 0.4s cubic-bezier(0.07, 0.53, 0.65, 0.95),
+++    transform 0.4s cubic-bezier(0.07, 0.53, 0.65, 0.95),
+++    box-shadow 0.4s cubic-bezier(0.07, 0.53, 0.65, 0.95),
+++    filter 0.4s cubic-bezier(0.07, 0.53, 0.65, 0.95);
++ }
++ 
++ i,i:hover{
 diff --git a/style.css b/style.css
 index fd8043c..9dd57f8 100644
 --- a/style.css
