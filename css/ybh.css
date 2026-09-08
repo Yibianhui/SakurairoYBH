@@ -449,19 +449,19 @@
 }
 
 /* ---------- 默认字体：按页面语言自动匹配更纱地区版本，天珩真·兜底 ---------- */
-:lang(zh),:lang(zh-CN),:lang(zh-Hans) {
+:lang(zh):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fas):not(.far):not(.fab):not(.fa-classic),:lang(zh-CN):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fas):not(.far):not(.fab):not(.fa-classic),:lang(zh-Hans):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fas):not(.far):not(.fab):not(.fa-classic) {
   font-family: 'Sarasa UI SC', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
 }
-:lang(zh-TW),:lang(zh-Hant) {
+:lang(zh-TW):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fas):not(.far):not(.fab):not(.fa-classic),:lang(zh-Hant):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fas):not(.far):not(.fab):not(.fa-classic) {
   font-family: 'Sarasa UI TC', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
 }
-:lang(zh-HK),:lang(zh-MO) {
+:lang(zh-HK):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fas):not(.far):not(.fab):not(.fa-classic),:lang(zh-MO):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fas):not(.far):not(.fab):not(.fa-classic) {
   font-family: 'Sarasa UI HC', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
 }
-:lang(ja) {
+:lang(ja):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fas):not(.far):not(.fab):not(.fa-classic) {
   font-family: 'Sarasa UI J', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
 }
-:lang(ko) {
+:lang(ko):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fas):not(.far):not(.fab):not(.fa-classic) {
   font-family: 'Sarasa UI K', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
 }
 
@@ -653,4 +653,23 @@ body.ybh-postlist-noexcerpt .post-list-thumb .post-title {
   body.ybh-postlist-2col #primary .site-main:has(> .post-list-thumb) {
     grid-template-columns: 1fr;
   }
+}
+
+/* ---------- YBH 1.1.5：FontAwesome 图标字体锚定 ----------
+   根因：:lang(zh-Hans) 特异性(0,1,0)与 .fa-solid(0,1,0) 相同且加载在后，
+   图标(语言继承 zh-Hans)的字体栈被 :lang 规则夺走，PUA 码位落到
+   TH-Tshyn P0(U+F000-F414) → 图标显示成天珩字库的"生僻字"字形。
+   上面 :lang 规则已加 :not() 排除；此处再用 !important 双保险锚定。 */
+i.fa-solid, i.fa-classic, i.fas,
+svg.fa-solid, svg.fa-classic {
+  font-family: 'Font Awesome 6 Free' !important;
+  font-weight: 900;
+}
+i.fa-regular, i.far {
+  font-family: 'Font Awesome 6 Free' !important;
+  font-weight: 400;
+}
+i.fa-brands, i.fab, svg.fa-brands {
+  font-family: 'Font Awesome 6 Brands' !important;
+  font-weight: 400;
 }

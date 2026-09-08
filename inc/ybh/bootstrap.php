@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
 }
 
 define('YBH_FONT_CDN', 'https://www.yibianhui.cn/wp-content/uploads/ybh-fonts');
-define('YBH_VERSION', '1.1.4');
+define('YBH_VERSION', '1.1.5');
 
 /**
  * FontAwesome 本地化（双保险）：
