@@ -1,0 +1,187 @@
+<?php
+/**
+ * SakurairoYBH · YBH 增量层（fork 魔改入口）
+ *
+ * - 摘除上游"主题目录必须叫 Sakurairo"的强制检查（保住 fork 目录名）
+ * - 默认字体注入更纱黑体（仅当选项仍为旧默认/空值时，用户显式自定义优先）
+ * - 加载 YBH 样式层 css/ybh.css（字体系统/标题签名/展台/默认样式烘焙）
+ * - 字体 CDN 预连接 + 首屏关键字重预加载
+ * - 裁剪前端 Emoji 脚本（后台保留，dashboard-emoji-fix 不受影响）
+ * - 注册友链批量导入工具
+ * - 1.1：展台紧凑模式 / 文章列表摘要与列数 / 导航随机文章按钮（均可在「YBH 魔改」设置区切换）
+ *
+ * @package SakurairoYBH
+ */
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+define('YBH_FONT_CDN', 'https://www.yibianhui.cn/wp-content/uploads/ybh-fonts');
+define('YBH_VERSION', '1.2.0');
+
+/**
+ * FontAwesome 本地化（双保险）：
+ * - 主路径：下方 option_iro_options filter（functions.php 已改为先加载本文件再填充
+ *   $GLOBALS['iro_options']，filter 会对 iro_opt 的数据源生效）；
+ * - 保险路径：若本文件被移回全局数组填充之后加载（旧顺序），此处直接改写全局数组。
+ * 两种加载顺序下，header / 404 / 编辑器样式里的 fontawesome_source 都走同源 ybh-fonts。
+ */
+if (isset($GLOBALS['iro_options']) && is_array($GLOBALS['iro_options'])
+    && ($GLOBALS['iro_options']['ybh_local_fontawesome'] ?? true)) {
+    $GLOBALS['iro_options']['fontawesome_source'] = YBH_FONT_CDN . '/fontawesome/css/all.min.css';
+}
+
+/**
+ * 0) YBH 调整项开关 → body class（CSS 按类生效，全部可在「YBH 魔改」设置区切换）。
+ */
+add_filter('body_class', 'ybh_body_classes');
+function ybh_body_classes($classes)
+{
+    if (iro_opt('ybh_exhibit_compact', true)) {
+        $classes[] = 'ybh-exhibit-compact';
+        $cols = (string) iro_opt('ybh_exhibit_cols', '6');
+        $classes[] = 'ybh-exhibit-cols-' . (in_array($cols, array('3', '4', '6'), true) ? $cols : '6');
+    }
+    if (iro_opt('ybh_postlist_no_excerpt', true)) {
+        $classes[] = 'ybh-postlist-noexcerpt';
+    }
+    if ((string) iro_opt('ybh_postlist_columns', '2') === '2') {
+        $classes[] = 'ybh-postlist-2col';
+    }
+    return $classes;
+}
+
+/**
+ * 0.5) 随机文章：/?random_post=1 → 302 到一篇随机已发布文章。
+ */
+add_action('template_redirect', 'ybh_random_post_redirect');
+function ybh_random_post_redirect()
+{
+    if (!isset($_GET['random_post'])) {
+        return;
+    }
+    $posts = get_posts(array(
+        'numberposts' => 1,
+        'orderby' => 'rand',
+        'post_type' => 'post',
+        'post_status' => 'publish',
+        'ignore_sticky_posts' => true,
+    ));
+    if (!empty($posts)) {
+        wp_safe_redirect(get_permalink($posts[0]), 302);
+        exit;
+    }
+    wp_safe_redirect(home_url('/'), 302);
+    exit;
+}
+
+/**
+ * 1) 上游在 admin_init 会把非 Sakurairo 目录强制改名回 Sakurairo，
+ *    对 fork 而言这是破坏性行为，必须解除。
+ *    （functions.php 中的钩子注册先于本文件加载，此处摘除即可生效）
+ */
+remove_action('admin_init', 'theme_folder_check_on_admin_init');
+
+/**
+ * 2) 默认字体：更纱黑体。
+ *    站点数据库中多处字体选项仍存有旧默认 Noto Serif SC / Noto Sans SC
+ *    （Google 字体，国内访客实际回退到系统字体），统一替换为更纱黑体全栈；
+ *    用户显式设置的其他字体一律尊重（保留原格式选项）。
+ *    覆盖键：全局默认/正文/导航菜单/页脚/换肤菜单/栏目标题/站名。
+ */
+add_filter('option_iro_options', 'ybh_font_option_defaults');
+function ybh_font_option_defaults($value)
+{
+    if (!is_array($value)) {
+        return $value;
+    }
+    $sarasa = "'Sarasa UI SC','PingFang SC','Microsoft YaHei','TH-Tshyn',sans-serif";
+    $legacy = array('', 'Noto Serif SC', 'Noto Sans SC', 'Sarasa UI SC');
+    $keys = array(
+        'global_default_font',
+        'global_font_2',
+        'nav_menu_font',
+        'footer_text_font',
+        'style_menu_font',
+        'area_title_font',
+    );
+    foreach ($keys as $key) {
+        $current = isset($value[$key]) ? trim((string) $value[$key]) : '';
+        if (in_array($current, $legacy, true)) {
+            $value[$key] = $sarasa;
+        }
+    }
+    if (isset($value['nav_text_logo']) && is_array($value['nav_text_logo'])) {
+        $current = isset($value['nav_text_logo']['font_name']) ? trim((string) $value['nav_text_logo']['font_name']) : '';
+        if (in_array($current, $legacy, true)) {
+            $value['nav_text_logo']['font_name'] = $sarasa;
+        }
+    }
+
+    /**
+     * 2.5) FontAwesome 本地化：zstatic CDN 在部分网络下不可达导致全站图标
+     *     显示为豆腐/空白；图标 CSS+webfonts 已同源化至 ybh-fonts，此处整体切换
+     *     （header 预加载/样式表、404 页、编辑器样式均走 fontawesome_source）。
+     *     注意从 $value 原始数组读开关：全局 $GLOBALS['iro_options'] 此刻可能尚未填充，
+     *     iro_opt 会走 default，导致开关无法关闭。
+     */
+    if (($value['ybh_local_fontawesome'] ?? true)) {
+        $value['fontawesome_source'] = YBH_FONT_CDN . '/fontawesome/css/all.min.css';
+    }
+    return $value;
+}
+
+/**
+ * 3) YBH 样式层：直接在 wp_head 打印，优先级 10 —— 保证排在主题组合 CSS（优先级 9）
+ *    或 iro-* 系列（wp_print_styles=8）之后；不使用 wp_enqueue_style，
+ *    避免因依赖 handle（iro-dark/iro-responsive 仅在非组合分支注册）缺失而被整体跳过。
+ */
+add_action('wp_head', 'ybh_enqueue_layer', 10);
+function ybh_enqueue_layer()
+{
+    printf(
+        '<link rel="stylesheet" id="ybh-layer-css" href="%s/css/ybh.css?ver=%s">' . "\n",
+        esc_url(get_template_directory_uri()),
+        esc_attr(IRO_VERSION . '-ybh' . YBH_VERSION)
+    );
+}
+
+/**
+ * 4) 字体 CDN 预连接 + 首屏关键字重预加载（Preload 只给确定会用到的字重）。
+ */
+add_action('wp_head', 'ybh_resource_hints', 2);
+function ybh_resource_hints()
+{
+    // 字体已同源化（wp-content/uploads/ybh-fonts），无需跨域 preconnect。
+    $preloads = array(
+        'sarasa/SarasaUiSC-Regular.woff2',
+        'sarasa/SarasaUiSC-SemiBold.woff2',
+        'lxgw/LXGWWenKai-Regular-subset.woff2',
+    );
+    foreach ($preloads as $file) {
+        printf(
+            '<link rel="preload" href="%s/%s" as="font" type="font/woff2" crossorigin>' . "\n",
+            YBH_FONT_CDN,
+            $file
+        );
+    }
+}
+
+/**
+ * 5) 前端 Emoji 脚本裁剪（后台不动，dashboard-emoji-fix.css 依旧有效）。
+ */
+add_action('init', 'ybh_trim_front_emoji');
+function ybh_trim_front_emoji()
+{
+    remove_action('wp_head', 'print_emoji_detection_script', 7);
+    remove_action('wp_print_styles', 'print_emoji_styles');
+    remove_action('embed_head', 'print_emoji_detection_script');
+    remove_filter('the_content_feed', 'wp_staticize_emoji');
+    remove_filter('comment_text_rss', 'wp_staticize_emoji');
+}
+
+/**
+ * 6) 友链批量导入工具（外观 → 友链批量导入）。
+ */
+require_once get_template_directory() . '/inc/ybh/friend-importer.php';

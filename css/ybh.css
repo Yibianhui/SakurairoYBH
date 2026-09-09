@@ -1,0 +1,994 @@
+/* ============================================================
+   SakurairoYBH · YBH 增量层
+   字体系统 / 标题签名可读性 / 展台密度 / 默认样式烘焙
+   由 inc/ybh/bootstrap.php 入队，加载于主题主样式之后
+   ============================================================ */
+
+/* ---------- 字体：Klee One（本地化） ---------- */
+@font-face {
+  font-family: 'Klee One';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/klee-one/KleeOne-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Klee One';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/klee-one/KleeOne-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- 字体：Boxed ---------- */
+@font-face {
+  font-family: 'Boxed';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/Boxed-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- 字体：更纱黑体 Sarasa UI（5 地区 × 5 字重 × 正/斜） ----------
+   文件名规则：Regular 斜体 = -Italic.woff2，其余字重斜体 = -{字重}Italic.woff2 */
+@font-face {
+  font-family: 'Sarasa UI SC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-ExtraLight.woff2') format('woff2');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI SC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-ExtraLightItalic.woff2') format('woff2');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI SC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI SC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-LightItalic.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI SC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI SC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI SC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI SC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-SemiBoldItalic.woff2') format('woff2');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI SC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI SC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiSC-BoldItalic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI TC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-ExtraLight.woff2') format('woff2');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI TC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-ExtraLightItalic.woff2') format('woff2');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI TC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI TC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-LightItalic.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI TC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI TC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI TC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI TC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-SemiBoldItalic.woff2') format('woff2');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI TC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI TC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiTC-BoldItalic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI J';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-ExtraLight.woff2') format('woff2');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI J';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-ExtraLightItalic.woff2') format('woff2');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI J';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI J';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-LightItalic.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI J';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI J';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI J';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI J';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-SemiBoldItalic.woff2') format('woff2');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI J';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI J';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiJ-BoldItalic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI K';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-ExtraLight.woff2') format('woff2');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI K';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-ExtraLightItalic.woff2') format('woff2');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI K';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI K';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-LightItalic.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI K';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI K';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI K';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI K';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-SemiBoldItalic.woff2') format('woff2');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI K';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI K';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiK-BoldItalic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI HC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-ExtraLight.woff2') format('woff2');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI HC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-ExtraLightItalic.woff2') format('woff2');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI HC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI HC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-LightItalic.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI HC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI HC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI HC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI HC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-SemiBoldItalic.woff2') format('woff2');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI HC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Sarasa UI HC';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/sarasa/SarasaUiHC-BoldItalic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ---------- 字体：天珩字库 TH-Tshyn（分片 fallback，unicode-range 按实际 cmap 生成） ---------- */
+@font-face {
+  font-family: 'TH-Tshyn';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/tianheng/TH-Tshyn-P0.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-0E5B,U+0E81-0EDF,U+0F00-0FDA,U+1000-D7FB,U+E000-E1EC,U+E295,U+E37E,U+E400-E4DA,U+E500-E6CE,U+E815-E864,U+ED2B-ED43,U+ED73-ED8C,U+EDC9-EE0B,U+EE2F-EE68,U+EE8C-EE9A,U+F000-F414,U+F4EE-F4FF,U+F900-FAD9,U+FB00-FDCF,U+FDF0-FFFD,U+16FF0-16FF1,U+E0001-E007F,U+E0100-E01EF;
+}
+@font-face {
+  font-family: 'TH-Tshyn';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/tianheng/TH-Tshyn-P1.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-007E,U+3099-309A,U+10000-1005D,U+10080-101A0,U+101D0-101FD,U+10280-103D5,U+10400-107BF,U+10800-108AF,U+108E0-10959,U+10980-10A9F,U+10AC0-10BAF,U+10C00-10C48,U+10C80-10D8F,U+10E60-10ED8,U+10EFA-10F89,U+10FB0-11241,U+11280-114D9,U+11580-115DD,U+11600-11746,U+11800-1183B,U+118A0-11959,U+119A0-11B09,U+11B60-11B67,U+11BC0-11CB6,U+11D00-11DE9,U+11EE0-11F5A,U+11FB0-12399,U+12400-12543,U+12F90-14646,U+16100-16139,U+16800-16B8F,U+16D40-16D79,U+16E40-16ED3,U+16F00-16F9F,U+16FE0-18CDA,U+18CFF-18D1E,U+18D80-18DF2,U+1AFF0-1B2FB,U+1BC00-1BCA3,U+1CC00-1CFC3,U+1D000-1D245,U+1D2C0-1D378,U+1D400-1DAAF,U+1DF00-1DF8A,U+1DFC5-1E06D,U+1E08F,U+1E100-1E14F,U+1E290-1E2FF,U+1E4D0-1E4F9,U+1E5D0-1E5FF,U+1E6C0-1E6FF,U+1E7E0-1E8D6,U+1E900-1E95F,U+1EC71-1ECB4,U+1ED01-1ED3D,U+1EE00-1EEBB,U+1EEF0-1EEF1,U+1F000-1F1AD,U+1F1E6-1F265,U+1F300-1F8D8,U+1F900-1FBFA,U+30000-33479;
+}
+@font-face {
+  font-family: 'TH-Tshyn';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/tianheng/TH-Tshyn-P2.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-007E,U+16FF0-16FF1,U+20000-2A6DF,U+2A700-2EE5D,U+2F800-2FA1D;
+}
+@font-face {
+  font-family: 'TH-Tshyn';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/tianheng/TH-Tshyn-P16.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-007E,U+100000-101AFF,U+102000-10437B,U+105000-10C7B7;
+}
+
+/* ---------- 字体：霞鹜文楷（子集优先，全量兜底；同一字体声明 italic 面，中文斜体不再合成歪斜） ---------- */
+@font-face {
+  font-family: 'LXGW WenKai';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/lxgw/LXGWWenKai-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'LXGW WenKai';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/lxgw/LXGWWenKai-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'LXGW WenKai';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/lxgw/LXGWWenKai-Regular-subset.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0020-00FF,U+2000-206F,U+3000-303F,U+4E00-9FA5,U+FF00-FFEF;
+}
+@font-face {
+  font-family: 'LXGW WenKai';
+  src: url('https://www.yibianhui.cn/wp-content/uploads/ybh-fonts/lxgw/LXGWWenKai-Regular-subset.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0020-00FF,U+2000-206F,U+3000-303F,U+4E00-9FA5,U+FF00-FFEF;
+}
+
+/* ---------- 默认字体：按页面语言自动匹配更纱地区版本，天珩真·兜底 ---------- */
+:lang(zh):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fas):not(.far):not(.fab):not(.fa-classic),:lang(zh-CN):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fas):not(.far):not(.fab):not(.fa-classic),:lang(zh-Hans):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fas):not(.far):not(.fab):not(.fa-classic) {
+  font-family: 'Sarasa UI SC', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
+}
+:lang(zh-TW):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fas):not(.far):not(.fab):not(.fa-classic),:lang(zh-Hant):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fas):not(.far):not(.fab):not(.fa-classic) {
+  font-family: 'Sarasa UI TC', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
+}
+:lang(zh-HK):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fas):not(.far):not(.fab):not(.fa-classic),:lang(zh-MO):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fas):not(.far):not(.fab):not(.fa-classic) {
+  font-family: 'Sarasa UI HC', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
+}
+:lang(ja):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fas):not(.far):not(.fab):not(.fa-classic) {
+  font-family: 'Sarasa UI J', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
+}
+:lang(ko):not(.fa-solid):not(.fa-regular):not(.fa-brands):not(.fas):not(.far):not(.fab):not(.fa-classic) {
+  font-family: 'Sarasa UI K', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
+}
+
+/* ---------- 中文斜体 = 霞鹜文楷（楷体作为斜体“声音”；代码块内不劫持） ---------- */
+i, em, cite, var, dfn {
+  font-family: 'LXGW WenKai', 'Sarasa UI SC', 'PingFang SC', 'Microsoft YaHei', 'TH-Tshyn', sans-serif;
+}
+code i, code em, pre i, pre em, kbd i, kbd em, samp i, samp em {
+  font-family: inherit;
+}
+
+/* ---------- 默认样式烘焙（与站点「额外 CSS」一致，作为主题默认值；额外 CSS 仍可随时覆盖） ---------- */
+.entry-content p {
+  margin: 0;
+  text-indent: 2em;
+  line-height: 2;
+}
+:root {
+  text-autospace: normal;
+  text-spacing-trim: trim-start;
+}
+
+/* 签名栏字体：弃用需走 Google 的 Noto Serif SC，改本地 Klee One */
+.header-info p {
+  font-family: 'Klee One', 'Sarasa UI SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+/* ---------- 标题与签名：多背景色可读性 ---------- */
+/* 首屏大标题：深色柔光保护层（亮背景压暗、暗背景提对比），不改变主题配色 */
+.center-text {
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.55), 0 0 30px rgba(0, 0, 0, 0.28);
+}
+.center-text.glitch::before,
+.center-text.glitch::after {
+  text-shadow: none;
+}
+/* 导航栏站名 */
+.site-title {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+/* 首屏头像描边 */
+.focusinfo .header-tou img {
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+}
+/* 签名栏：无论封面明暗都保底可读（透明度下限 + 双模式底色） */
+.header-info {
+  background: rgba(255, 255, 255, max(var(--homepage_widget_transparency, 1), 0.45));
+  border-color: rgba(255, 255, 255, max(var(--homepage_widget_transparency, 1), 0.45));
+}
+.header-info p {
+  color: var(--theme-skin, #505050);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+body.dark .header-info {
+  background: rgba(28, 28, 30, max(var(--homepage_widget_transparency, 1), 0.5));
+  border-color: rgba(255, 255, 255, 0.08);
+}
+body.dark .header-info p {
+  color: #ebebeb;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- 展台：单行展示数量 3 → 4（响应式逐级回落；body 前缀抬高优先级，与加载顺序解耦） ---------- */
+body .bento-medium {
+  grid-column: span 3;
+}
+@media (max-width: 1280px) {
+  body .bento-medium {
+    grid-column: span 4;
+  }
+}
+@media (max-width: 1080px) {
+  body .bento-medium {
+    grid-column: span 6;
+  }
+}
+@media (max-width: 768px) {
+  body .bento-medium {
+    grid-column: span 12;
+  }
+}
+
+/* ============================================================
+   YBH 1.1 · 选项化调整（「YBH 魔改」设置区，body class 驱动）
+   ============================================================ */
+
+/* ---------- 导航：随机文章按钮（骰子右侧） ---------- */
+#ybh-random-post {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+#ybh-random-post i {
+  font-size: 15px;
+}
+
+/* ---------- 展台紧凑模式：单行 6 张、纵向缩短、浮层收紧 ---------- */
+body.ybh-exhibit-compact .bento-medium {
+  grid-row: span 1;
+  min-height: 8.75rem;
+}
+body.ybh-exhibit-compact.ybh-exhibit-cols-6 .bento-medium {
+  grid-column: span 2;
+}
+body.ybh-exhibit-compact.ybh-exhibit-cols-4 .bento-medium {
+  grid-column: span 3;
+}
+body.ybh-exhibit-compact.ybh-exhibit-cols-3 .bento-medium {
+  grid-column: span 4;
+}
+/* 文字避让：标题/描述浮层收紧 + 去位移去遮罩，杜绝裁字与淡化 */
+body.ybh-exhibit-compact .card-title-wrapper {
+  padding: 0.5rem 0.9rem;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.35) 70%, transparent 100%);
+  mask-image: none;
+  -webkit-mask-image: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+body.ybh-exhibit-compact .bento-card-title {
+  font-size: 0.85rem;
+}
+body.ybh-exhibit-compact .card-info {
+  padding: 1.6rem 0.9rem 0.5rem;
+  transform: none;
+  opacity: 1;
+  transition: none;
+}
+body.ybh-exhibit-compact .card-description {
+  font-size: 0.78rem;
+  line-height: 1.45;
+  opacity: 1;
+}
+/* 响应式逐级回落 */
+@media (max-width: 1280px) {
+  body.ybh-exhibit-compact.ybh-exhibit-cols-6 .bento-medium,
+  body.ybh-exhibit-compact.ybh-exhibit-cols-4 .bento-medium {
+    grid-column: span 3;
+  }
+  body.ybh-exhibit-compact.ybh-exhibit-cols-3 .bento-medium {
+    grid-column: span 4;
+  }
+}
+@media (max-width: 1080px) {
+  body.ybh-exhibit-compact.ybh-exhibit-cols-6 .bento-medium,
+  body.ybh-exhibit-compact.ybh-exhibit-cols-4 .bento-medium {
+    grid-column: span 4;
+  }
+  body.ybh-exhibit-compact.ybh-exhibit-cols-3 .bento-medium {
+    grid-column: span 6;
+  }
+}
+@media (max-width: 768px) {
+  body.ybh-exhibit-compact .bento-medium {
+    grid-column: span 6;
+  }
+}
+@media (max-width: 560px) {
+  body.ybh-exhibit-compact .bento-medium {
+    grid-column: span 12;
+  }
+}
+
+/* ---------- 文章列表：两列 + 禁用摘要 ---------- */
+/* :has 限定：仅当 main 里确实有文章卡时才启用网格，避免影响文章页/独立页面的排版 */
+body.ybh-postlist-2col #primary .site-main:has(> .post-list-thumb) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 15px;
+  align-items: start;
+}
+body.ybh-postlist-2col #primary .site-main > *:not(.post-list-thumb) {
+  grid-column: 1 / -1;
+}
+body.ybh-postlist-2col .post-list-thumb {
+  float: none;
+  width: auto;
+}
+body.ybh-postlist-noexcerpt .post-list-thumb .post-excerpt {
+  display: none;
+}
+body.ybh-postlist-noexcerpt .post-list-thumb .post-title {
+  bottom: 10%;
+}
+@media (max-width: 860px) {
+  body.ybh-postlist-2col #primary .site-main:has(> .post-list-thumb) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- YBH 1.1.5：FontAwesome 图标字体锚定 ----------
+   根因：:lang(zh-Hans) 特异性(0,1,0)与 .fa-solid(0,1,0) 相同且加载在后，
+   图标(语言继承 zh-Hans)的字体栈被 :lang 规则夺走，PUA 码位落到
+   TH-Tshyn P0(U+F000-F414) → 图标显示成天珩字库的"生僻字"字形。
+   上面 :lang 规则已加 :not() 排除；此处再用 !important 双保险锚定。 */
+i.fa-solid, i.fa-classic, i.fas,
+svg.fa-solid, svg.fa-classic {
+  font-family: 'Font Awesome 6 Free' !important;
+  font-weight: 900;
+}
+i.fa-regular, i.far {
+  font-family: 'Font Awesome 6 Free' !important;
+  font-weight: 400;
+}
+i.fa-brands, i.fab, svg.fa-brands {
+  font-family: 'Font Awesome 6 Brands' !important;
+  font-weight: 400;
+}
+
+/* ============================================================
+   SakurairoYBH 2.0 · Modern UI 视觉改版层
+   - Issues #4：标题 hover 字距不再跳变 / 元信息条换行避让（修复遮挡）
+   - Issues #1：卡片统一圆角 + 圆角遮罩，消除不同设备上的黑边/渲染瑕疵
+   - Issues #3：顶栏链接 visited 状态不再回退成 UA 蓝色
+   - 现代感：统一卡片/胶囊/胶囊按钮体系、悬浮动效、首页焦点区、区块留白
+   纯视觉层：不改变 DOM 与主题逻辑；如需整体回退，删除本段即可。
+   ============================================================ */
+
+/* ---------- 0. 设计令牌（跟随主题换肤变量，暗色独立成组） ---------- */
+body {
+  --ybh-radius-lg: 20px;
+  --ybh-radius-md: 16px;
+  --ybh-radius-sm: 12px;
+  --ybh-card-bg: rgba(255, 255, 255, 0.88);
+  --ybh-ring: rgba(255, 255, 255, 0.55);
+  --ybh-shadow-1: 0 10px 30px -16px rgba(24, 32, 42, 0.20);
+  --ybh-shadow-2: 0 18px 44px -20px rgba(24, 32, 42, 0.32);
+  --ybh-accent: var(--theme-skin-matching, #6c8cff);
+}
+body.dark {
+  --ybh-radius-lg: 18px;
+  --ybh-card-bg: rgba(30, 31, 38, 0.90);
+  --ybh-ring: rgba(255, 255, 255, 0.09);
+  --ybh-shadow-1: 0 12px 30px -18px rgba(0, 0, 0, 0.55);
+  --ybh-shadow-2: 0 22px 48px -22px rgba(0, 0, 0, 0.70);
+}
+
+/* ---------- 1. 文章卡 · 现代卡片体系（#1 圆角/黑边 + #4 悬浮动效） ---------- */
+body .post-list-thumb {
+  border-radius: var(--ybh-radius-lg);
+  background-color: var(--ybh-card-bg);
+  box-shadow: var(--ybh-shadow-1);
+  /* 圆角遮罩：消除部分设备缩放下背景/渐变溢出圆角形成的黑边与锯齿 */
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
+  isolation: isolate;
+}
+body .post-list-thumb:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--ybh-shadow-2);
+}
+/* 封面图悬浮微放大 */
+body .post-list-thumb .post-thumb a img {
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), filter 0.7s ease;
+  filter: saturate(1.02);
+}
+body .post-list-thumb:hover .post-thumb a img {
+  transform: scale(1.045);
+}
+
+/* 标题面板（玻璃拟态，暗色模式成组） */
+body .post-list-thumb .post-title {
+  border-radius: var(--ybh-radius-md);
+  background-color: rgba(255, 255, 255, 0.84);
+  border-color: rgba(255, 255, 255, 0.65);
+  padding: 12px 18px;
+  box-shadow: 0 12px 28px -18px rgba(0, 0, 0, 0.40);
+}
+body .post-list-thumb .post-title:hover {
+  background-color: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 14px 34px -18px rgba(0, 0, 0, 0.45);
+}
+body.dark .post-list-thumb .post-title {
+  background-color: rgba(22, 23, 28, 0.78);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+/* #4：hover 只变色、不再放大字距（base 2px 恒定） */
+body .post-list-thumb .post-title h3,
+body .post-list-thumb .post-title h3:hover {
+  letter-spacing: 2px;
+  color: var(--theme-skin, #454b52);
+}
+body .post-list-thumb .post-title h3:hover {
+  color: var(--article-theme-highlight, var(--theme-skin-matching, #6c8cff));
+}
+body.dark .post-list-thumb .post-title h3 {
+  color: #eaeaf0;
+}
+
+/* ---------- 2. 元信息条（发布时间/热度/分类/阅读时长）避让与统一（#4） ---------- */
+body .post-list-thumb .post-date,
+body .post-list-thumb .post-meta {
+  top: 12px;
+  border-radius: 10px;
+  background-color: rgba(20, 22, 28, 0.30);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  -webkit-backdrop-filter: blur(14px) saturate(170%);
+  backdrop-filter: blur(14px) saturate(170%);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.40);
+}
+body .post-list-thumb .post-date {
+  left: 12px;
+}
+/* 关键修复：meta 允许换行并右对齐收缩，日期在左上角互不遮挡；
+   原「白色 nowrap + overflow hidden」在双列卡片下会与日期/标题挤压 */
+body .post-list-thumb .post-meta {
+  right: 12px;
+  left: auto;
+  max-width: calc(100% - 164px);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  row-gap: 4px;
+  column-gap: 12px;
+  white-space: normal;
+  overflow: visible;
+  height: auto;
+  line-height: 1.55;
+}
+body .post-list-thumb .post-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+body .post-list-thumb .post-meta a {
+  display: inline;
+  color: inherit;
+}
+body .post-list-thumb .post-meta a:hover {
+  color: #fff !important;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+@media (max-width: 860px) {
+  body .post-list-thumb .post-meta {
+    max-width: calc(100% - 140px);
+  }
+}
+
+/* ---------- 3. 展台 Bento 卡（#1 圆角/黑边防护 + 悬浮体系） ---------- */
+body .bento-item {
+  border-radius: var(--ybh-radius-lg);
+  background-color: var(--ybh-card-bg);
+  box-shadow: var(--ybh-shadow-1);
+  border-color: var(--ybh-ring);
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
+  isolation: isolate;
+}
+body .bento-item:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--ybh-shadow-2);
+}
+body .bento-item .card-image {
+  border-radius: var(--ybh-radius-lg);
+}
+body .bento-item .card-image img {
+  border-radius: var(--ybh-radius-lg);
+}
+/* 紧凑展台：收紧栅格间隙、行高更平衡 */
+body.ybh-exhibit-compact .bento-grid {
+  gap: 14px;
+}
+body.ybh-exhibit-compact .card-title-wrapper {
+  border-radius: var(--ybh-radius-lg) var(--ybh-radius-lg) 0 0;
+}
+/* 卡片信息浮层文字更透气 */
+body .bento-card-title {
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+body .card-info .card-description {
+  letter-spacing: 0.01em;
+}
+
+/* ---------- 4. 统计胶囊：玻璃圆角胶囊，暗色成组 ---------- */
+body .stat-capsule {
+  border-radius: 999px;
+  border: 1px solid var(--ybh-ring);
+  box-shadow: 0 8px 20px -12px rgba(24, 32, 42, 0.18);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  backdrop-filter: blur(12px) saturate(150%);
+}
+body .stat-capsule:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px -14px rgba(24, 32, 42, 0.25);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+body.dark .stat-capsule {
+  background: rgba(34, 35, 42, 0.86);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ---------- 5. 「更早的文章」分页按钮：现代胶囊按钮 ---------- */
+body #pagination {
+  display: block;
+  text-align: center;
+  margin: 36px 0 60px;
+  padding: 8px 0;
+}
+body #pagination a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  min-width: 200px;
+  padding: 13px 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.70);
+  color: var(--theme-skin, #454b52);
+  box-shadow: 0 10px 26px -16px rgba(24, 32, 42, 0.35);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  backdrop-filter: blur(12px) saturate(160%);
+  font-weight: 600;
+  transition: color 0.25s ease, background-color 0.25s ease,
+              transform 0.25s ease, box-shadow 0.25s ease;
+}
+body #pagination a:hover {
+  color: #fff;
+  background-color: var(--ybh-accent);
+  border-color: transparent;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px -12px var(--ybh-accent);
+}
+body #pagination a:active {
+  transform: translateY(0);
+}
+/* 加载态：保留主题加载图，文字隐藏避免闪烁 */
+body #pagination a.loading {
+  color: transparent;
+  pointer-events: none;
+  background-color: transparent;
+  background-image: var(--load_nextpage_svg, none);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: auto 80%;
+  border-color: transparent;
+  box-shadow: none;
+}
+body.dark #pagination a {
+  background: rgba(40, 41, 49, 0.75);
+  border-color: rgba(255, 255, 255, 0.14);
+  color: #e6e7ec;
+}
+
+/* ---------- 6. 首页焦点区：更现代的层级与呼吸感 ---------- */
+body .focusinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 20px;
+}
+body .center-text {
+  line-height: 1.16;
+  letter-spacing: 0.05em;
+}
+body .focusinfo .header-info {
+  border-radius: 18px;
+  box-shadow: 0 14px 40px -18px rgba(0, 0, 0, 0.45);
+}
+/* 社交图标悬浮上浮 */
+body .top-social {
+  list-style: none;
+}
+body .top-social .socialIconWithInner {
+  display: inline-flex;
+  list-style: none;
+}
+body .top-social a {
+  display: inline-flex;
+  transition: transform 0.22s ease;
+}
+body .top-social a:hover {
+  transform: translateY(-4px);
+}
+body .top-social a i {
+  transition: transform 0.22s ease, color 0.22s ease;
+}
+body .top-social a:hover i {
+  color: var(--ybh-accent);
+}
+
+/* ---------- 7. 区块标题：图标收纳成色块芯片，间距更有节奏 ---------- */
+body h1.fes-title,
+body h1.posts-area-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 30px 0 18px;
+  letter-spacing: 0.02em;
+  font-weight: 700;
+}
+body h1.fes-title i,
+body h1.posts-area-title i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1em;
+  height: 2.1em;
+  font-size: 0.68em;
+  border-radius: 12px;
+  color: var(--ybh-accent);
+  background: rgba(127, 127, 127, 0.14);
+  background: color-mix(in srgb, var(--ybh-accent) 15%, transparent);
+}
+
+/* ---------- 8. 悬浮页脚 ---------- */
+body .site-footer {
+  border-radius: 22px 22px 0 0;
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  backdrop-filter: blur(20px) saturate(150%);
+  box-shadow: 0 -12px 34px -16px rgba(24, 32, 42, 0.28);
+}
+
+/* ---------- 9. 顶栏链接：visited 不再回退成 UA 蓝色（#3 视觉项） ---------- */
+body .site-header a:visited,
+body .mobile-nav a:visited,
+body .site-footer a:visited {
+  color: inherit;
+}
+body .site-header .menu a,
+body .mobile-nav .menu a {
+  -webkit-tap-highlight-color: transparent;
+}

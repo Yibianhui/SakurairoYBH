@@ -1,12 +1,21 @@
 @charset "utf-8";
 
 /*
+<<<<<<< Updated upstream
 Theme Name: Sakurairo
 Theme URI: https://github.com/mirai-mamori/Sakurairo
 Author: Created by Fuukei
 Author URI: https://docs.fuukei.org/
 Description: A WordPress theme that is built with AI-assisted reading features, colorful, user-friendly, well-rounded, and rich in functionalities. (Based on Theme Sakura)
 Version: 3.0.11
+=======
+Theme Name: SakurairoYBH
+Theme URI: https://github.com/EquinoxXawa/SakurairoYBH
+Author: EquinoxX (forked from YBH origin, based on Sakurairo by Fuukei)
+Author URI: https://github.com/EquinoxXawa
+Description: SakurairoYBH —— 基于 Fuukei Sakurairo 的 YBH 魔改版：更纱黑体字体系统、标题签名可读性、展台密度、友链批量导入、性能优化与默认样式烘焙。A WordPress theme that is built with AI-assisted reading features, colorful, user-friendly, well-rounded, and rich in functionalities. (Based on Theme Sakura)
+Version: 3.0.11-ybh2
+>>>>>>> Stashed changes
 Tested up to: 6.8
 Requires at least: 6.0
 Requires PHP: 8.0
@@ -1011,7 +1020,6 @@ nav .menu > li .sub-menu a {
 
 .post-list-thumb .post-title h3:hover {
   color: var(--article-theme-highlight,var(--theme-skin-matching));
-  letter-spacing: 3px;
 }
 
 .post-list-thumb .post-title h3::before{
