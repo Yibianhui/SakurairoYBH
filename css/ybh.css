@@ -673,3 +673,136 @@ i.fa-brands, i.fab, svg.fa-brands {
   font-family: 'Font Awesome 6 Brands' !important;
   font-weight: 400;
 }
+/* ============================================================
+   YBH 1.2 · 展台图片防遮挡（GitHub issue #1）
+   背景：展台源图 1920×720(8:3)，卡片显示比例 1.4~2.2:1，
+   object-fit:cover 会裁掉左右 25–45% 画面。
+   默认：cover 模式下 object-position 收窄为居中偏上，
+   裁切量从两侧均摊（悬停放大时不再偏向底部）；
+   可选 contain 完整显示模式（ybh_exhibit_contain 开关）。
+   ============================================================ */
+
+/* cover 模式（默认）：横向裁切居中、纵向贴顶偏移，两侧均摊裁切 */
+body .bento-item .card-image img {
+  object-position: 50% 35%;
+}
+
+/* contain 模式：整图完整显示，不裁切；底色用主题卡片底色，
+   兼容明暗两种模式；悬停放大禁用（contain 下放大会溢出） */
+body.ybh-exhibit-contain .bento-item .card-image {
+  background: rgba(255, 255, 255, 0.65);
+}
+body.dark.ybh-exhibit-contain .bento-item .card-image {
+  background: rgba(30, 30, 30, 0.65);
+}
+body.ybh-exhibit-contain .bento-item .card-image img {
+  object-fit: contain;
+  object-position: center;
+}
+body.ybh-exhibit-contain .bento-item:hover .card-image img {
+  transform: none;
+}
+/* contain 下顶部标题浮层不再压在图片主体上，改收窄为细条 */
+body.ybh-exhibit-contain .card-title-wrapper {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.45) 0%, transparent 100%);
+}
+
+/* ============================================================
+   YBH 1.2 · 文章列表动效优化（GitHub issue #4）
+   ============================================================ */
+
+/* ① 标题悬停不再抖动：去掉 letter-spacing 3px 位移动画，
+   仅保留变色反馈 */
+.post-list-thumb .post-title h3:hover {
+  letter-spacing: 2px;
+}
+
+/* ② 控件防遮挡：日期/元信息胶囊默认弱化（透明度 0.55），
+   悬停卡片时才完整浮现，减少对封面主体的常驻遮挡 */
+.post-list .post-list-thumb .post-date,
+.post-list .post-list-thumb .post-meta {
+  opacity: 0.55;
+  transition: opacity 0.3s ease-in-out;
+}
+.post-list .post-list-thumb:hover .post-date,
+.post-list .post-list-thumb:hover .post-meta {
+  opacity: 1;
+}
+/* 元信息胶囊常驻时截断省略，避免长分类串盖满封面 */
+.post-list .post-list-thumb .post-meta {
+  max-width: 46%;
+}
+
+/* ④ 白猫故障特效（首页大标题 glitch）：原 mix-blend-mode: lighten
+   在浅色背景上白字直接消失（issue #4"白猫特效不显示"）。
+   改为普通混合 + 深色描边阴影，红蓝错位残影在任意背景上可见，
+   仅 hover 时触发故障动画（与原逻辑一致） */
+.center-text.glitch {
+  mix-blend-mode: normal;
+  color: #fff;
+  text-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.55),
+    0 0 30px rgba(0, 0, 0, 0.28),
+    2px 2px 0 rgba(0, 0, 0, 0.18);
+}
+.center-text.glitch::before,
+.center-text.glitch::after {
+  text-shadow: none;
+  visibility: hidden;
+}
+/* hover 才显示残影层并开始故障动画，平时保持干净的标题 */
+.center-text.glitch:hover::before {
+  text-shadow: 4px 0 #ff3f1a;
+  visibility: visible;
+}
+.center-text.glitch:hover::after {
+  text-shadow: -5px 0 #00a7e0;
+  visibility: visible;
+}
+
+/* ============================================================
+   YBH 1.2 · 中文域名（IDN）页面兼容修复（GitHub issue #3）
+   症状①：中文域名页面一直加载 —— pjax 跳转/预加载把含中文（非
+   ASCII）的 href 直接交给 fetch，URL 编码态不一致导致请求挂起。
+   主题层防御：JS 侧在 fetch 前对链接做 IDN→Punycode 不可行
+   （浏览器已自动处理），实际根因多为 pjax 拦截了非 ASCII 链接。
+   保守修复：让主题菜单/站名链接不受 pjax 拦截并显式声明颜色。
+   症状②：菜单文字变蓝 —— 主题未定义 a:visited 颜色，浏览器
+   默认 visited 紫蓝色穿透到导航胶囊上。
+   ============================================================ */
+
+/* 导航/站名/页脚链接：显式锁定颜色，杜绝浏览器默认 visited 色 */
+.site-branding a,
+.nav-search-wrapper a,
+.nav-search-wrapper nav ul li a,
+nav .menu > li .sub-menu a,
+.mobile-nav a,
+.site-footer a,
+#colophon a,
+.user-menu-wrapper a,
+.header-user-menu a {
+  color: var(--theme-skin, #505050);
+}
+body.dark .site-branding a,
+body.dark .nav-search-wrapper a,
+body.dark .nav-search-wrapper nav ul li a,
+body.dark nav .menu > li .sub-menu a,
+body.dark .mobile-nav a,
+body.dark .user-menu-wrapper a,
+body.dark .header-user-menu a {
+  color: var(--dark-text-primary, #ebebeb);
+}
+/* hover 态维持主题原行为（主题色胶囊 + 白字） */
+.nav-search-wrapper nav ul li a:hover,
+.site-title:hover {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+/* 已访问与未访问同色（visited 拟态限制下用声明式兜底） */
+.site-branding a:visited,
+.nav-search-wrapper a:visited,
+.nav-search-wrapper nav ul li a:visited,
+nav .menu > li .sub-menu a:visited,
+.mobile-nav a:visited,
+#colophon a:visited {
+  color: var(--theme-skin, #505050);
+}

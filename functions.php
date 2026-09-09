@@ -1836,6 +1836,8 @@ add_action('admin_enqueue_scripts', 'admin_ini');
  */
 function theme_admin_notice_callback()
 {
+    // YBH fork：该通知用于向上游 Fuukei 官方发送主题版本统计，fork 不适用，直接短路。
+    return;
     // 判断当前用户是否为管理员
     if (!current_user_can('manage_options')) {
         return;
@@ -1930,6 +1932,11 @@ add_action('admin_notices', 'theme_admin_notice_callback');
  */
 
 function theme_folder_check_on_admin_init() {
+    // YBH fork：目录改名检测对 fork 是破坏性的（会把 SakurairoYBH 改回 Sakurairo / 提示删除重名目录）。
+    // 直接短路本函数；函数保留仅为兼容潜在的其它调用点。来源申明见 style.css 主题头。
+    if (true) {
+        return;
+    }
     // 获取当前父主题文件夹名称及路径
     $current_theme_path = get_template_directory();
     $theme_folder_name = basename($current_theme_path);

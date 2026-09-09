@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
 }
 
 define('YBH_FONT_CDN', 'https://www.yibianhui.cn/wp-content/uploads/ybh-fonts');
-define('YBH_VERSION', '1.1.5');
+define('YBH_VERSION', '1.2.0');
 
 /**
  * FontAwesome 本地化（双保险）：
@@ -48,6 +48,9 @@ function ybh_body_classes($classes)
     }
     if ((string) iro_opt('ybh_postlist_columns', '2') === '2') {
         $classes[] = 'ybh-postlist-2col';
+    }
+    if (iro_opt('ybh_exhibit_contain', false)) {
+        $classes[] = 'ybh-exhibit-contain';
     }
     return $classes;
 }
@@ -185,3 +188,95 @@ function ybh_trim_front_emoji()
  * 6) 友链批量导入工具（外观 → 友链批量导入）。
  */
 require_once get_template_directory() . '/inc/ybh/friend-importer.php';
+
+/**
+ * 7) 上传图片自动转 WebP（GitHub issue #2）。
+ *    - 拦截 wp_handle_upload：jpg/png 落盘即用 GD 转为 WebP 并替换文件，
+ *      url/类型同步改写；原图不保留（避免双份占用）。
+ *    - 动画图（GIF/APNG）、SVG 等非 GD 可处理类型自动跳过。
+ *    - 可在「YBH 魔改 → 性能」关闭或调整质量（默认开，质量 82）。
+ *    - GD 无 WebP 支持时静默降级为原格式，不影响上传。
+ */
+add_filter('wp_handle_upload', 'ybh_upload_to_webp');
+function ybh_upload_to_webp($upload)
+{
+    if (!iro_opt('ybh_webp_convert', true)) {
+        return $upload;
+    }
+    if (empty($upload['file']) || empty($upload['type'])) {
+        return $upload;
+    }
+    // 仅处理 jpeg/png；gif（可能含动画）/webp(已是)/svg 等跳过
+    if (!in_array($upload['type'], array('image/jpeg', 'image/png'), true)) {
+        return $upload;
+    }
+    if (!function_exists('imagecreatefromjpeg') && !function_exists('imagecreatefrompng')) {
+        return $upload;
+    }
+    // GD WebP 支持检测（imagewebp 存在且 gd info 声明 WebP）
+    if (!function_exists('imagewebp')
+        || !function_exists('gd_info')
+        || stripos(implode('', gd_info()), 'webp') === false) {
+        return $upload;
+    }
+
+    $path = $upload['file'];
+    $ext  = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+    if (!in_array($ext, array('jpg', 'jpeg', 'png'), true)) {
+        return $upload;
+    }
+
+    // PNG 走无歧义加载（透明通道），JPEG 走 imagecreatefromjpeg
+    if ($ext === 'png' && function_exists('imagecreatefrompng')) {
+        $img = @imagecreatefrompng($path);
+    } elseif (function_exists('imagecreatefromjpeg')) {
+        $img = @imagecreatefromjpeg($path);
+    } else {
+        return $upload;
+    }
+    if (!$img) {
+        return $upload; // 解码失败保留原文件
+    }
+
+    if (function_exists('imagepalettetotruecolor')) {
+        imagepalettetotruecolor($img);
+    }
+    if (function_exists('imagealphablending')) {
+        imagealphablending($img, true);
+        imagesavealpha($img, true);
+    }
+
+    $quality = (int) iro_opt('ybh_webp_quality', 82);
+    if ($quality < 50 || $quality > 95) {
+        $quality = 82;
+    }
+
+    $webp_path = $path . '.webp_tmp';
+    if (!@imagewebp($img, $webp_path, $quality)) {
+        imagedestroy($img);
+        if (is_file($webp_path)) {
+            @unlink($webp_path);
+        }
+        return $upload; // 编码失败保留原文件
+    }
+    imagedestroy($img);
+
+    // webp 反而更大（如低色彩 png）→ 放弃转换，保留原图
+    if (filesize($webp_path) >= filesize($path)) {
+        @unlink($webp_path);
+        return $upload;
+    }
+
+    // 目标文件名：替换扩展名为 .webp，同步改写 url 与 MIME
+    $new_path = preg_replace('/\.(jpe?g|png)$/i', '.webp', $path);
+    if ($new_path === $path) {
+        @unlink($webp_path);
+        return $upload;
+    }
+    @unlink($path);                 // 原图不保留，避免双份占用
+    rename($webp_path, $new_path);
+    $upload['file'] = $new_path;
+    $upload['type'] = 'image/webp';
+    $upload['url']  = preg_replace('/\.(jpe?g|png)$/i', '.webp', $upload['url']);
+    return $upload;
+}

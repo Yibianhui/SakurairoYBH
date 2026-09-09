@@ -4027,6 +4027,14 @@ $prefix = 'iro_options';
       ),
 
       array(
+        'id' => 'ybh_exhibit_contain',
+        'type' => 'switcher',
+        'title' => __('展台图片完整显示（防裁切）','sakurairo_csf'),
+        'label' => __('默认关闭（cover 裁切铺满）。开启后卡片图改为 contain 完整显示：不再裁掉画面内容，两侧以底色补白，适合主体偏居中、不同比例下都要看全的封面','sakurairo_csf'),
+        'default' => false
+      ),
+
+      array(
         'type'    => 'subheading',
         'content' => __('文章列表','sakurairo_csf'),
       ),
@@ -4082,6 +4090,28 @@ $prefix = 'iro_options';
         'title' => __('FontAwesome 图标本地化','sakurairo_csf'),
         'label' => __('默认开启：图标 CSS 与字体改用站点自身同源资源（wp-content/uploads/ybh-fonts），与字体系统一致，无需跨域授权','sakurairo_csf'),
         'default' => true
+      ),
+
+      array(
+        'id' => 'ybh_webp_convert',
+        'type' => 'switcher',
+        'title' => __('上传图片自动转 WebP','sakurairo_csf'),
+        'label' => __('默认开启：新上传的 jpg/png 图片在落盘时转换为 WebP（质量 82），原图不再保留；显著减小封面与配图体积。已有图片不受影响，转换依赖服务器 GD 库的 WebP 支持','sakurairo_csf'),
+        'default' => true
+      ),
+
+      array(
+        'id' => 'ybh_webp_quality',
+        'type' => 'slider',
+        'title' => __('WebP 转换质量','sakurairo_csf'),
+        'dependency' => array( 'ybh_webp_convert', '==', 'true', '', 'true' ),
+        'options' => array(
+          'min'  => 50,
+          'max'  => 95,
+          'step' => 1,
+          'unit' => '',
+        ),
+        'default' => 82,
       ),
 
     )
