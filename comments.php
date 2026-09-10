@@ -228,6 +228,15 @@ function get_smilies_panel() {
 			}
 			add_filter('comment_form_field_cookies', 'comment_cookies_check_label');
 
+            // WordPress 会在 comment_form() 内部把 $args['submit_button'] 当作 sprintf 的「格式串」处理
+            // （wp-includes/comment-template.php: sprintf( $args['submit_button'], ... )）。
+            // 提交按钮 HTML 里由 wp_nonce_field(..., true, ...) 注入的 _wp_http_referer 会原样带上当前
+            // REQUEST_URI，而 esc_attr() 不转义 '%'。当 URL 含中文等非 ASCII 字符时，浏览器用大写十六进制
+            // 百分号编码（如 雨 → %E9%9B%A8），其中的 %9B 会被 sprintf 解析为「宽度 9 + 格式符 B」，
+            // PHP 8 直接抛出 Uncaught ValueError: Unknown format specifier "B"，导致整页 500（表现为一直加载）。
+            // 因此把格式串中的 '%' 统一转义为 '%%'，交由 sprintf 还原为字面量。
+            $args['submit_button'] = str_replace('%', '%%', $args['submit_button']);
+
             comment_form($args);
         }
         ?>

@@ -161,14 +161,16 @@ if (!function_exists('get_post_cover_html')) {
                         <?php echo $cover_html; ?>
                     </a>
                 </div><!-- thumbnail-->
-                <div class="post-date">
-                    <i class="fa-regular fa-clock"></i><?= esc_html(poi_time_since(strtotime($post->post_date))) ?>
-                    <?php if (is_sticky()) : ?>
-                        &nbsp;<div class="post-top"><i class="fa-solid fa-chess-queen"></i><?php _e("Sticky", "sakurairo") ?></div>
-                    <?php endif ?>
-                </div>
-                <div class="post-meta">
-                    <?php render_article_meta() ?>
+                <div class="post-topbar">
+                    <div class="post-date">
+                        <i class="fa-regular fa-clock"></i><?= esc_html(poi_time_since(strtotime($post->post_date))) ?>
+                        <?php if (is_sticky()) : ?>
+                            &nbsp;<div class="post-top"><i class="fa-solid fa-chess-queen"></i><?php _e("Sticky", "sakurairo") ?></div>
+                        <?php endif ?>
+                    </div>
+                    <div class="post-meta">
+                        <?php render_article_meta() ?>
+                    </div>
                 </div>
                 <?php $title_style = get_post_meta(get_the_ID(), 'title_style', true); ?>
                 <div class="post-title" style="<?php echo esc_attr($title_style); ?>">

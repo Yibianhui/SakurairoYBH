@@ -717,20 +717,78 @@ body.ybh-exhibit-contain .card-title-wrapper {
   letter-spacing: 2px;
 }
 
-/* ② 控件防遮挡：日期/元信息胶囊默认弱化（透明度 0.55），
-   悬停卡片时才完整浮现，减少对封面主体的常驻遮挡 */
-.post-list .post-list-thumb .post-date,
-.post-list .post-list-thumb .post-meta {
+/* ② 控件防重叠（结构性修复）：
+   原 post-date / post-meta 是两个各自绝对定位的兄弟元素，
+   一个贴 left:10px、一个贴 right:10px，卡片变窄（两列/窄屏）时
+   两者必然互相挤压 → 观看量与分类叠加栏重叠。
+   现包进同一 flex 行 .post-topbar，由 flex 分配宽度，
+   日期按内容自适应、元信息吃掉剩余空间并省略号截断，
+   物理上不可能重叠。同时默认弱化（0.55）悬停才完全浮现。 */
+.post-list-thumb .post-topbar {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  z-index: 3;
+  pointer-events: none;
+}
+/* 容器只做布局，点击穿透到封面链接；胶囊本身仍可点击 */
+.post-list-thumb .post-topbar > .post-date,
+.post-list-thumb .post-topbar > .post-meta {
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: auto !important;
+  margin: 0 !important;
+  pointer-events: auto;
   opacity: 0.55;
   transition: opacity 0.3s ease-in-out;
 }
-.post-list .post-list-thumb:hover .post-date,
-.post-list .post-list-thumb:hover .post-meta {
+/* 日期：按内容宽度，最多 40%；元信息：吃掉剩余，最少可收缩到 0
+   （min-width:0 是让 flex 项能真正收缩并触发省略号的关键） */
+.post-list-thumb .post-topbar > .post-date {
+  flex: 0 1 auto;
+  max-width: 40%;
+}
+.post-list-thumb .post-topbar > .post-meta {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+.post-list-thumb:hover .post-topbar > .post-date,
+.post-list-thumb:hover .post-topbar > .post-meta {
   opacity: 1;
 }
-/* 元信息胶囊常驻时截断省略，避免长分类串盖满封面 */
-.post-list .post-list-thumb .post-meta {
-  max-width: 46%;
+/* 元信息内部各项同样禁止撑破，保证省略号生效 */
+.post-list-thumb .post-topbar > .post-meta > span {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* 置顶标记不再撑破日期胶囊 */
+.post-list-thumb .post-topbar .post-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+/* 窄屏兜底：仍不换行（换行会把胶囊压到封面中部），靠省略号收尾 */
+@media (max-width: 640px) {
+  .post-list-thumb .post-topbar {
+    gap: 6px;
+  }
+  .post-list-thumb .post-topbar > .post-date {
+    max-width: 34%;
+  }
 }
 
 /* ④ 白猫故障特效（首页大标题 glitch）：原 mix-blend-mode: lighten
