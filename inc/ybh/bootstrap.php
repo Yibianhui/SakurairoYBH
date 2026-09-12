@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
 }
 
 define('YBH_FONT_CDN', 'https://www.yibianhui.cn/wp-content/uploads/ybh-fonts');
-define('YBH_VERSION', '1.2.1');
+define('YBH_VERSION', '1.2.2');
 
 /**
  * FontAwesome 本地化（双保险）：
@@ -280,3 +280,32 @@ function ybh_upload_to_webp($upload)
     $upload['url']  = preg_replace('/\.(jpe?g|png)$/i', '.webp', $upload['url']);
     return $upload;
 }
+
+/* ---------------------------------------------------------------------------
+ * 登录 / 重置密码
+ * ------------------------------------------------------------------------- */
+
+/**
+ * 重置密码链接的有效期。
+ *
+ * WordPress 默认 `password_reset_expiration` = DAY_IN_SECONDS，也就是**只有 24 小时**。
+ * 超时后 wp-login.php 会把用户 302 到
+ * `wp-login.php?action=lostpassword&error=expiredkey`，显示「密码重置链接已过期」。
+ * 投稿者往往隔天才翻邮件，因此这条「链接失效」会反复出现。
+ *
+ * 这里放宽到 7 天。要收紧（或配合安全插件调整）就改 YBH_PASSWORD_RESET_DAYS。
+ * 注：重置成功后 WordPress 会立刻清空 user_activation_key，链接随即失效；
+ * 重复申请也会覆盖旧密钥，使更早那封邮件里的链接失效 —— 这两种属于设计行为。
+ */
+if (!defined('YBH_PASSWORD_RESET_DAYS')) {
+    define('YBH_PASSWORD_RESET_DAYS', 7);
+}
+
+add_filter('password_reset_expiration', function ($expiration) {
+    $days = (int) YBH_PASSWORD_RESET_DAYS;
+    if ($days < 1) {
+        $days = 1;
+    }
+    // 用 max()：若安全插件已经把有效期放宽得更长，就不要反而缩短它。
+    return max((int) $expiration, $days * DAY_IN_SECONDS);
+}, 20);
