@@ -151,16 +151,27 @@ function ybh_enqueue_layer()
 }
 
 /**
- * 4) 字体 CDN 预连接 + 首屏关键字重预加载（Preload 只给确定会用到的字重）。
+ * 4) 字体预加载（只给「每页确定会用到」的字重）。
+ *
+ * ⚠️ 这里的路径**必须与 css/ybh.css 里的 @font-face 保持一致**，否则会 preload 一堆
+ *    用不上的文件——浏览器 preload 是无条件下载的，控制台还会报
+ *    "preloaded but not used within a few seconds"。
+ *    v1.2.2 做完字体子集化后 CSS 已改指 `ybh-fonts/slice/*`，本函数一度仍指向
+ *    `sarasa/SarasaUiSC-*.woff2` 全量文件，等于每页白下 21 MB，把子集化收益全抵消。
+ *
+ * 只预加载正文(400)与标题(600)两个字重：
+ *   - 正文：:lang(zh) 规则下所有正文都走 Sarasa UI SC 400，必然用到；
+ *   - 标题：h1/h2/h3 与卡片标题用 600，页面首屏必有标题。
+ * 霞鹜文楷只在正文出现 <em>/<i>/<cite> 等时才用得到，属内容相关，不做预加载
+ * （预加载了反而会再次触发同类警告）。
  */
 add_action('wp_head', 'ybh_resource_hints', 2);
 function ybh_resource_hints()
 {
     // 字体已同源化（wp-content/uploads/ybh-fonts），无需跨域 preconnect。
     $preloads = array(
-        'sarasa/SarasaUiSC-Regular.woff2',
-        'sarasa/SarasaUiSC-SemiBold.woff2',
-        'lxgw/LXGWWenKai-Regular-subset.woff2',
+        'slice/SarasaUiSC-Regular.subset.woff2',  // 正文 400
+        'slice/SarasaUiSC-SemiBold.subset.woff2', // 标题 600
     );
     foreach ($preloads as $file) {
         printf(
