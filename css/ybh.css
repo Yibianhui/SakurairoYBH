@@ -554,9 +554,10 @@ code i, code em, pre i, pre em, kbd i, kbd em, samp i, samp em {
 }
 
 /* ---------- 默认样式烘焙（与站点「额外 CSS」一致，作为主题默认值；额外 CSS 仍可随时覆盖） ---------- */
+/* 段落排版：取消段首缩进，改回「段间距」形式（沿用主题内容样式原本的 margin-bottom: 10px） */
 .entry-content p {
-  margin: 0;
-  text-indent: 2em;
+  margin: 0 0 10px;
+  text-indent: 0;
   line-height: 2;
 }
 :root {
