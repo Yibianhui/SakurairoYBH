@@ -1,0 +1,83 @@
+@charset "utf-8";
+/*
+ * YBH 经典编辑器 · 编辑区外壳样式
+ *
+ * 注意：字体与正文段落排版**不在这里定义** —— 前台那份 css/ybh.css 已通过
+ * mce_css 过滤器挂进编辑器，字体与段落规则同源，避免出现「改了一处漏了另一处」。
+ * 本文件只负责编辑区外壳：可读宽度、内边距、标题/引用/列表在编辑时的观感。
+ */
+
+/* ---------- 编辑区画布：与前台正文一致的阅读宽度 ---------- */
+body#tinymce,
+body.mce-content-body {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 16px 20px 64px;
+  background: transparent;
+}
+
+/* ---------- 段落：无首行缩进 + 段间距（与前台 .entry-content p 对齐） ---------- */
+body#tinymce p {
+  margin: 0 0 10px;
+  text-indent: 0;
+  line-height: 2;
+}
+
+/* 空行段落：给个最小高度，让作者直观看到「这里有一行空行」 */
+body#tinymce p:empty {
+  min-height: 1.2em;
+}
+
+/* ---------- 标题：与前台层级观感一致，且不在编辑区显示 H1 ---------- */
+body#tinymce h1,
+body#tinymce h2,
+body#tinymce h3,
+body#tinymce h4,
+body#tinymce h5,
+body#tinymce h6 {
+  margin: 1.4em 0 0.6em;
+  line-height: 1.45;
+}
+body#tinymce h2 { font-size: 1.5em; }
+body#tinymce h3 { font-size: 1.28em; }
+body#tinymce h4 { font-size: 1.12em; }
+
+/* ---------- 引用：左侧强调线，编辑时即可看出与正文的区别 ---------- */
+body#tinymce blockquote {
+  margin: 0 0 1em;
+  padding: 6px 0 6px 16px;
+  border-left: 3px solid rgba(128, 128, 128, 0.5);
+  opacity: 0.9;
+}
+
+/* ---------- 列表 ---------- */
+body#tinymce ul,
+body#tinymce ol {
+  margin: 0 0 1em;
+  padding-left: 1.6em;
+}
+body#tinymce li {
+  line-height: 2;
+}
+
+/* ---------- 媒体与代码 ---------- */
+body#tinymce img {
+  max-width: 100%;
+  height: auto;
+}
+body#tinymce pre {
+  padding: 12px 14px;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+body#tinymce hr {
+  margin: 1.6em 0;
+  border: 0;
+  border-top: 1px solid rgba(128, 128, 128, 0.35);
+}
+
+/* ---------- 「阅读更多」标记：编辑区里显眼一点，避免误删 ---------- */
+body#tinymce .more-tag,
+body#tinymce .wp-more-tag {
+  display: block;
+}

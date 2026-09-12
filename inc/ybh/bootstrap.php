@@ -201,6 +201,12 @@ function ybh_trim_front_emoji()
 require_once get_template_directory() . '/inc/ybh/friend-importer.php';
 
 /**
+ * 7) 经典编辑器体验（工具栏精简 / 回车与粘贴成段 / 空行保留 / 编辑区同前台样式）。
+ *    依赖 classic-editor 插件；未激活时本文件的过滤器不生效也不报错。
+ */
+require_once get_template_directory() . '/inc/ybh/editor.php';
+
+/**
  * 7) 上传图片自动转 WebP（GitHub issue #2）。
  *    - 拦截 wp_handle_upload：jpg/png 落盘即用 GD 转为 WebP 并替换文件，
  *      url/类型同步改写；原图不保留（避免双份占用）。

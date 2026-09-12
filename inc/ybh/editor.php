@@ -1,0 +1,130 @@
+<?php
+/**
+ * YBH · 经典编辑器（Classic Editor）体验配置
+ *
+ * 背景：区块编辑器对投稿者门槛过高。改用经典编辑器后，这里做三件事：
+ *   1) 精简工具栏 —— 只留写作真正用得到的按钮，去掉作者用不上的东西；
+ *   2) 规整「回车/粘贴/空行」的行为 —— 回车与粘贴换行都成为独立段落，空行可自由保留；
+ *   3) 编辑区样式与前台一致（css/editor-style.css）—— 做到真正的所见即所得。
+ *
+ * 依赖：classic-editor 插件（已安装并激活，classic-editor-replace=classic）。
+ * 注意：tinymce-advanced 插件**未激活**，因此这里的过滤器不会被它抢走。
+ */
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+/* ---------------------------------------------------------------------------
+ * 1) 编辑区样式：与前台同一套字体与段落排版
+ *    - 直接把前台那份 ybh.css 挂进编辑器（同一个 URL，含同样的 ?ver），
+ *      字体与段落规则天然同源 —— 以后改字体不用再改第二处（v1.2.2 吃过这个亏）；
+ *    - editor-style.css 只负责编辑区外壳（宽度、内边距等）。
+ * ------------------------------------------------------------------------- */
+add_action('after_setup_theme', function () {
+    add_editor_style('css/editor-style.css');
+});
+
+add_filter('mce_css', function ($mce_css) {
+    $url = add_query_arg(
+        'ver',
+        IRO_VERSION . '-ybh' . YBH_VERSION,
+        get_template_directory_uri() . '/css/ybh.css'
+    );
+    return $mce_css ? $mce_css . ',' . $url : $url;
+});
+
+/* ---------------------------------------------------------------------------
+ * 2) 精简工具栏（优先级 999 = 最后执行，确保结果就是我们定义的样子）
+ *    其它插件（如 ruby-markup-converter 的注音按钮）会往工具栏里塞按钮，
+ *    这里显式保留 ruby，其余第三/四行一律清空。
+ *    第一行 = 常用写作按钮；第二行默认收起（点最右「工具栏切换」展开）。
+ * ------------------------------------------------------------------------- */
+add_filter('mce_buttons', function ($buttons) {
+    return array(
+        // 注音按钮（'ruby'）由 ruby-markup-converter 插件自己挂载，且它的过滤器
+        // 在本过滤器之后执行，所以这里**不要**再写一遍，否则会出现两个注音按钮。
+        'formatselect',   // 段落 / 各级标题 / 引用 / 代码
+        'bold', 'italic', 'underline', 'strikethrough',
+        'bullist', 'numlist', 'blockquote',
+        'alignleft', 'aligncenter', 'alignright',
+        'link', 'unlink',
+        'wp_add_media',   // 插入图片/媒体
+        'wp_more',        // 阅读更多标记
+        'fullscreen',
+        'wp_adv',         // 展开/收起第二行
+    );
+}, 999);
+
+add_filter('mce_buttons_2', function ($buttons) {
+    return array(
+        'pastetext',      // 粘贴为纯文本（需要清格式时用）
+        'removeformat',   // 清除格式
+        'hr',
+        'charmap',
+        'forecolor',
+        'outdent', 'indent',
+        'undo', 'redo',
+        'wp_help',
+    );
+}, 999);
+
+// 第三、四行留空：按钮堆砌正是要避免的
+add_filter('mce_buttons_3', function () {
+    return array();
+}, 999);
+add_filter('mce_buttons_4', function () {
+    return array();
+}, 999);
+
+/* ---------------------------------------------------------------------------
+ * 3) 编辑器行为：让「回车 / 粘贴换行 / 空行」符合中文写作直觉
+ * ------------------------------------------------------------------------- */
+add_filter('tiny_mce_before_init', function ($init) {
+    // 回车生成真正的 <p> 段落（而不是 <br>），保存后由 wpautop 一致处理
+    $init['forced_root_block'] = 'p';
+    $init['wpautop'] = true;
+
+    // 纯文本粘贴时，换行 → 段落（而不是 <br>）。粘贴自 Word/微信/备忘录的分段能原样保留。
+    $init['paste_text_linebreaktype'] = 'p';
+    // 粘贴时不带入来源文档的字体/颜色等内联样式，避免文章排版被污染
+    $init['keep_styles'] = false;
+    $init['paste_webkit_styles'] = 'none';
+    $init['paste_merge_formats'] = true;
+
+    // 保留行尾 <br>：作者手动敲的空行不会被编辑器吞掉
+    $init['remove_trailing_brs'] = false;
+
+    // 默认收起第二行工具栏，界面更清爽
+    $init['wordpress_adv_hidden'] = true;
+
+    // 格式下拉只留作者需要的，并去掉 H1（文章标题已是 H1，正文再用会破坏结构）
+    $init['block_formats'] = '段落=p;标题=h2;小标题=h3;更小标题=h4;引用=blockquote;代码=pre';
+
+    return $init;
+});
+
+/* ---------------------------------------------------------------------------
+ * 4) 投稿者也允许上传图片（否则「插入媒体」只能挑已有图，不能传自己的插图）
+ *
+ *    WordPress 的 contributor 角色**默认没有** upload_files 权限。对投稿体验来说
+ *    这是硬伤：作者写文章想配图，却传不上去。这里只补这一项权限，不涉及
+ *    发布文章、编辑他人文章等其它能力。
+ *    想收回就把 YBH_ALLOW_CONTRIBUTOR_UPLOAD 定义为 false（或注释掉本段）。
+ * ------------------------------------------------------------------------- */
+if (!defined('YBH_ALLOW_CONTRIBUTOR_UPLOAD')) {
+    define('YBH_ALLOW_CONTRIBUTOR_UPLOAD', true);
+}
+add_filter('user_has_cap', function ($allcaps, $caps, $args, $user = null) {
+    if (!YBH_ALLOW_CONTRIBUTOR_UPLOAD) {
+        return $allcaps;
+    }
+    if (!in_array('upload_files', (array) $caps, true)) {
+        return $allcaps;
+    }
+    // 第 4 个参数才是 WP_User（$args[0] 是能力名，别拿它去 get_userdata）
+    if ($user instanceof WP_User && in_array('contributor', (array) $user->roles, true)) {
+        $allcaps['upload_files'] = true;
+    }
+    return $allcaps;
+}, 10, 4);
