@@ -163,7 +163,9 @@ if (!function_exists('get_post_cover_html')) {
                 </div><!-- thumbnail-->
                 <div class="post-topbar">
                     <div class="post-date">
-                        <i class="fa-regular fa-clock"></i><?= esc_html(poi_time_since(strtotime($post->post_date))) ?>
+                        <?php /* 第三参数 $text=true ⇒ 不输出「发布于」前缀，只留时间本身，
+                                 胶囊更短、压在封面上的遮挡更少 */ ?>
+                        <i class="fa-regular fa-clock"></i><?= esc_html(poi_time_since(strtotime($post->post_date), false, true)) ?>
                         <?php if (is_sticky()) : ?>
                             &nbsp;<div class="post-top"><i class="fa-solid fa-chess-queen"></i><?php _e("Sticky", "sakurairo") ?></div>
                         <?php endif ?>

@@ -35,6 +35,8 @@ foreach ($component_order as $component) {
 
         // 文章列表
         case 'primary':
+            // YBH：主页标签行（文章数最多的前 20 个 + 「显示更多」折叠）
+            ybh_render_home_tag_row();
             ?>
             <div id="primary" class="content-area">
                 <main id="main" class="site-main" role="main">

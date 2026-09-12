@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
 }
 
 define('YBH_FONT_CDN', 'https://www.yibianhui.cn/wp-content/uploads/ybh-fonts');
-define('YBH_VERSION', '1.2.3');
+define('YBH_VERSION', '1.2.5');
 
 /**
  * FontAwesome 本地化（双保险）：
@@ -205,6 +205,51 @@ require_once get_template_directory() . '/inc/ybh/friend-importer.php';
  *    依赖 classic-editor 插件；未激活时本文件的过滤器不生效也不报错。
  */
 require_once get_template_directory() . '/inc/ybh/editor.php';
+
+/**
+ * 8) 主页标签行（文章数最多的前 20 个标签 + 「显示更多」折叠）。
+ *    渲染函数由 index.php 的 primary 组件调用。
+ */
+require_once get_template_directory() . '/inc/ybh/home-tags.php';
+
+/**
+ * 9) 随机封面默认改走主题自带的轻量端点 rand-cover.php
+ *
+ *    原先走主题内建 REST（/wp-json/sakura/v1/gallery?img=w）：每次请求都要**完整启动
+ *    WordPress**（内核+插件+主题）再 302，而首页有 **10 张封面** ⇒ 一次访问 = 10 次重量级
+ *    PHP 启动，是首页最大的性能黑洞。
+ *    rand-cover.php **不加载 WordPress**，直读 imglist.json 后 302，耗时从数百毫秒降到几毫秒；
+ *    该端点自带 `Cache-Control: max-age=60`，一分钟内复用同一次随机结果 ——
+ *    既大幅减少请求，又保留「每次刷新基本都换图」的随机感。
+ *
+ *    只在设置**确实是「使用主题内建图库」**时才改写 —— 该开关（random_graphs_options）
+ *    的取值实测为 `gallery`（另有 `internal_api` 与空值也算内建）；若你显式切成 `external_api`
+ *    并填了自己的外链，则完全尊重你的设置。
+ *    注意：`random_graphs_link` 里可能残留上游默认的外链（如 api.kuroko.cn / api.fuukei.org），
+ *    那在 `gallery` 模式下并不会被使用，因此判断只看开关，不看那个链接。
+ */
+add_filter('option_iro_options', 'ybh_cover_api_endpoint');
+function ybh_cover_api_endpoint($value)
+{
+    if (!is_array($value)) {
+        return $value;
+    }
+
+    $opt = isset($value['random_graphs_options']) ? (string) $value['random_graphs_options'] : '';
+
+    // '' / 'gallery' / 'internal_api' 都表示「用主题自带图库」；只有 external_api 表示自定义外链
+    if (!in_array($opt, array('', 'gallery', 'internal_api'), true)) {
+        return $value;   // 用户自定义过，不动
+    }
+
+    $base = get_template_directory_uri() . '/rand-cover.php';
+    $value['random_graphs_options']     = 'external_api';
+    $value['random_graphs_link']        = $base . '?img=w';   // 桌面：横图
+    $value['random_graphs_mts']         = true;
+    $value['random_graphs_link_mobile'] = $base . '?img=l';   // 移动：竖图（与原内建分支一致）
+
+    return $value;
+}
 
 /**
  * 7) 上传图片自动转 WebP（GitHub issue #2）。

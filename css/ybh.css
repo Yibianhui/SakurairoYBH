@@ -832,17 +832,27 @@ body.ybh-exhibit-contain .card-title-wrapper {
   opacity: 0.55;
   transition: opacity 0.3s ease-in-out;
 }
-/* 日期：按内容宽度，最多 40%；元信息：吃掉剩余，最少可收缩到 0
+/* 日期：自身很短（「发布于」前缀已去掉），按内容宽度即可，不参与收缩；
+   元信息：**宽度贴合内容**（flex: 0 1 auto）——内容短就短、内容长才收缩，
+   并封顶 62% 后走省略号收口。这样遮罩不再无脑撑满，也不会与日期互相挤压。
    （min-width:0 是让 flex 项能真正收缩并触发省略号的关键） */
 .post-list-thumb .post-topbar > .post-date {
-  flex: 0 1 auto;
-  max-width: 40%;
+  flex: 0 0 auto;
 }
 .post-list-thumb .post-topbar > .post-meta {
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   min-width: 0;
-  max-width: 100%;
+  max-width: 62%;
   overflow: hidden;
+}
+/* 减少遮挡：胶囊整体比主题默认更紧凑（默认 padding 5px 10px / font-size 12px），
+   占用面积更小、压在封面上的视觉重量更轻 */
+.post-list-thumb .post-topbar > .post-date,
+.post-list-thumb .post-topbar > .post-meta {
+  padding: 3px 8px;
+  font-size: 11.5px;
+  line-height: 17px;
+  border-radius: 8px;
 }
 .post-list-thumb:hover .post-topbar > .post-date,
 .post-list-thumb:hover .post-topbar > .post-meta {
@@ -867,9 +877,74 @@ body.ybh-exhibit-contain .card-title-wrapper {
   .post-list-thumb .post-topbar {
     gap: 6px;
   }
-  .post-list-thumb .post-topbar > .post-date {
-    max-width: 34%;
+  .post-list-thumb .post-topbar > .post-meta {
+    max-width: 58%;
   }
+}
+
+/* ---------- 主页标签行：文章数最多的标签（前 20 + 「显示更多」折叠） ----------
+   纯文字链接：链接色沿用主题，hover 时以虚线下划线提示可点；
+   折叠用 checkbox + CSS（:checked ~ …），不依赖 JavaScript。 */
+.ybh-tag-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0 0 18px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(128, 128, 128, 0.07);
+  line-height: 1.95;
+}
+.ybh-tag-row-icon {
+  flex: 0 0 auto;
+  opacity: 0.7;
+  padding-top: 2px;
+}
+.ybh-tag-list {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.ybh-tag {
+  display: inline-block;
+  margin: 0 10px 0 0;
+  font-size: 13px;
+  text-decoration: none;
+  border-bottom: 1px dashed transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.ybh-tag:hover {
+  border-bottom-color: currentColor;
+}
+/* 折叠项：默认隐藏，勾选后展开 */
+.ybh-tag-extra {
+  display: none;
+}
+.ybh-tag-toggle:checked ~ .ybh-tag-list .ybh-tag-extra {
+  display: inline-block;
+}
+.ybh-tag-more {
+  flex: 0 0 auto;
+  cursor: pointer;
+  font-size: 13px;
+  white-space: nowrap;
+  user-select: none;
+  opacity: 0.85;
+}
+.ybh-tag-more:hover {
+  opacity: 1;
+}
+.ybh-tag-more i {
+  margin-left: 3px;
+  font-size: 11px;
+}
+.ybh-tag-more-close {
+  display: none;
+}
+.ybh-tag-toggle:checked ~ .ybh-tag-more .ybh-tag-more-open {
+  display: none;
+}
+.ybh-tag-toggle:checked ~ .ybh-tag-more .ybh-tag-more-close {
+  display: inline;
 }
 
 /* ④ 白猫故障特效（首页大标题 glitch）：原 mix-blend-mode: lighten
